@@ -29,7 +29,7 @@ public class DemoController {
 	public Map<String, Object> getUserList() {
 		List<UserModel> list = new ArrayList<UserModel>();
 
-		try {
+		try { 
 			list = userService.queryUser();
 		} catch (Exception e) {
 			e.printStackTrace();
