@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kingkewow.springmvc.model.UserModel;
 
 @Controller
+@RequestMapping("/views")
 public class GeneralController {
 	
 	@RequestMapping(value="/index")
@@ -24,9 +25,8 @@ public class GeneralController {
 		return model;
 	}
 	
-	@RequestMapping(value="/user")
+	@RequestMapping(value="/grid")
 	public @ResponseBody Map<String,Object> queryUser( UserModel u){
-		System.out.println(u.getUsername());
 		UserModel user = new UserModel("1","fangjing",23,"JANE");
 		UserModel user2 = new UserModel("2","kingkewow",25,"JA");
 		List<UserModel> list = new ArrayList<UserModel>();
