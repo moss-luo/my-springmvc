@@ -3,6 +3,8 @@
  */
 package com.kingkewow.springmvc.model;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -15,7 +17,11 @@ import com.kingkewow.springmvc.annotation.validator.CheckCase;
  * @author Administrator
  * 
  */
-public class UserModel {
+public class UserModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2800904955732428191L;
 	@NotBlank
 	private String id;
 	@Size(min=6,max=12)
@@ -26,11 +32,14 @@ public class UserModel {
 	private String enName;
 
 	public UserModel(String id, String username, int age, String enName) {
-		super();
 		this.id = id;
 		this.username = username;
 		this.age = age;
 		this.enName = enName;
+	}
+
+	public UserModel() {
+		super();
 	}
 
 	/**
