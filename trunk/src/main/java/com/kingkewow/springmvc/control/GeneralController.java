@@ -27,8 +27,8 @@ public class GeneralController {
 	
 	@RequestMapping(value="/grid")
 	public @ResponseBody Map<String,Object> queryUser( UserModel u){
-		UserModel user = new UserModel("1","fangjing",23,"JANE");
-		UserModel user2 = new UserModel("2","kingkewow",25,"JA");
+		UserModel user = new UserModel("1","测试名称1",23,"TEST");
+		UserModel user2 = new UserModel("2","测试名称2",25,"TEST2");
 		List<UserModel> list = new ArrayList<UserModel>();
 		list.add(user);
 		list.add(user2);
