@@ -10,9 +10,9 @@
 
 	<properties>
 		<org.slf4j-version>1.6.1</org.slf4j-version>
-		<springVersion>3.1.1.RELEASE</springVersion>
+		<springVersion>3.0.5.RELEASE</springVersion>
 		<mysqlConnectorVersion>5.1.18</mysqlConnectorVersion>
-		<mybatisVersion>3.0.6</mybatisVersion>
+		<mybatisVersion>3.0.5</mybatisVersion>
 		<aspectjVersion>1.5.3</aspectjVersion>
 		<cglibVersion>2.2</cglibVersion>
 
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>3.0.5.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
