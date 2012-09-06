@@ -15,21 +15,21 @@ body{width:100%;
    
 /*中部区域*/
 #container {
-    height:850px;
-    margin:5px 0;}
+    height:580px;
+    }
 
-/*侧边栏*/
+/*菜单栏*/
 .menuBox {
     float:left;
     width:200px;
-    height:850px;
+    height:580px;
      }
 
 /*内容区域*/
 .mainBox {
     float:right;
     width:1220px;
-    height:850px;
+    height:580px;
    }
 /*底部*/
 #footer {
