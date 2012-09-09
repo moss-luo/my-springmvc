@@ -128,11 +128,12 @@
 		</dependency>
 		<!-- mybatis dependency end -->
 		<!-- database connector begin -->
-		<dependency>
+		<!--  <dependency>
 			<groupId>oracle</groupId>
 			<artifactId>oracle-ojdbc</artifactId>
 			<version>6</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
