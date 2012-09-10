@@ -65,6 +65,9 @@
 	</bean>
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+		
+	<!-- 惯例优先原则(convention over configuration) -->
+	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
