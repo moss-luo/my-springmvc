@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kingkewow.springmvc.model.ParamModel;
 import com.kingkewow.springmvc.model.UserModel;
 
 @Controller
-@RequestMapping("/views")
+@RequestMapping
 public class GeneralController {
 	
-	@RequestMapping(value="/index")
+	@RequestMapping
 	public @ResponseBody Model execute( Model model){
 		UserModel user = new UserModel("1","fangjing",23,"JANE");
 		model.addAttribute("jane", user);
@@ -28,8 +27,8 @@ public class GeneralController {
 		return model;
 	}
 	
-	@RequestMapping(value="/grid")
-	public @ResponseBody Map<String,Object> queryUser(ParamModel pager ){
+	@RequestMapping
+	public @ResponseBody Map<String,Object> grid(ParamModel pager ){
 //		System.out.println(name);
 		System.out.println(pager.getPage());
 		UserModel user = new UserModel("1","测试名称1",23,"TEST");
@@ -44,7 +43,7 @@ public class GeneralController {
 		return map;
 	}
 	
-	@RequestMapping("/param")
+	@RequestMapping
 	public @ResponseBody Map<String,Object> param(@RequestParam("queryParams") Map<String, Object> queryParams/*URL传参，此处可以有多个传入参数*/){
 		System.out.println(queryParams.get("name"));
 		Map<String,Object> map = new HashMap<String, Object>();
@@ -53,7 +52,7 @@ public class GeneralController {
 		return map;
 	}
 	
-	@RequestMapping("/upload")
+	@RequestMapping
 	public @ResponseBody String upload(@RequestParam("name") String name,@RequestParam("file") MultipartFile file) throws Exception{
 		System.out.println(name);
 		if (!file.isEmpty()) {
