@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.isoftstone.wissdemo.vo.User;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping
+public class PersonController {
 
-	@RequestMapping("query")
+	@RequestMapping
 	public @ResponseBody Map<String,Object> query(){
 		User u1 = new User(1,"张三",22,"中国广东","华为");
 		User u2 = new User(2,"张四",23,"中国香港","软通");

@@ -128,12 +128,16 @@
 		</dependency>
 		<!-- mybatis dependency end -->
 		<!-- database connector begin -->
-		<!--  <dependency>
+		 <dependency>
 			<groupId>oracle</groupId>
 			<artifactId>oracle-ojdbc</artifactId>
 			<version>6</version>
 		</dependency>
-		-->
+		<!-- 
+		若公共仓库无oracle驱动包，请执行DOS命令
+		mvn install:install-file -Dfile={ORACLE_HOME}/oracle-ojdbc-6.jar -Dpackaging=jar\ -DgroupId=oracle -DartifactId=oracle-ojdbc -Dversion=6 
+		{ORACLE_HOME}为你的Oracle安装路径
+		 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
