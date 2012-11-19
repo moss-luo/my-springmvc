@@ -31,7 +31,8 @@ public class GeneralController {
 
 	@RequestMapping
 	public @ResponseBody
-	Map<String, Object> grid(ParamModel pager) {
+	Map<String, Object> grid(@RequestParam(value="username", required=false) final String username,ParamModel pager) {
+		System.out.println(username);
 		UserModel user = new UserModel("1", "测试名称1", 23, "TEST");
 		UserModel user2 = new UserModel("2", "测试名称2", 25, "TEST2");
 		List<UserModel> list = new ArrayList<UserModel>();
