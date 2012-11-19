@@ -5,11 +5,11 @@ $(function() {
 			dataUrl : 'grid.do',
 			idField : 'id',
 			pageSize : 10,
-			width : '100%',
-			height : '99%',
+			width : '99.9%',
+			height : '95%',
 			checkbox : true,
 			validateDelete : function() {
-				var grid = $("#maingrid4").crud("getDatagrid").getSelectedRows();
+				var grid = $("#maingrid").crud("getDatagrid").getSelectedRows();
 				if(grid.length>1)return false;
 				
 				return true;
@@ -36,13 +36,18 @@ $(function() {
 		} ],
 		search:{
 			field:[
-				{title:'用户名',id:'s_userId',field:'name'}
-			]
+			       {display:'用户名',name:'username', newline: false,type:'text'},
+			       {display: "日期 ", name: "createdate", newline: false, type: "date"},
+			],
+			buttons:[{text:'测试',id:'test',handle:function(){alert("OK");}}],
+			beforeSubmit:function(){
+				return true;
+			}
 	 	}
 		
 	}
-	$("#maingrid4").crud(options);
-	var grid = $("#maingrid4").crud("getDatagrid");
+	$("#maingrid").crud(options);
+	var grid = $("#maingrid").crud("getDatagrid");
 
 });
 
