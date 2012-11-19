@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	margin:0px;padding:0px; font-family:Arial,"微软雅黑"; background:none; font-size:12px;
+}
+
+.title{
+	width:100%; height:39px; background:url(../images/title_center.jpg) repeat-x;
+}
+
+.box{
+	margin-top:20px;
+}
+
+.Esbox .contentbox{
+	margin-top:20px
+}
+.contentbox{
+	width:49%; 
+}
+
+.l{
+	float:left;
+}
+
+.r{
+	float:right;
+}
+
+.textbox{
+	border:1px solid #9BA7B8; border-top:none;
+}
+
+.title strong{
+	display:block; line-height:39px;height:39px; padding-left:10px; color:#134079; font-weight:normal; font-size:15px;  background:url(../images/title_left.jpg) no-repeat; margin-right:10px; display:inline;
+}
+
+.title span {
+    background: url("../images/title_right.jpg") no-repeat scroll right top transparent;
+    display: block;
+    height: 39px;
+    line-height: 39px;
+    padding-right: 10px;
+}
