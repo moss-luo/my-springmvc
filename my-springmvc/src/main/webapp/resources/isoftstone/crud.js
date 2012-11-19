@@ -17,6 +17,7 @@
 			deleteable:true,						//是否可删除
 			bulkDeleteable:true,					//是否可以批量删除
 			idField:null,							//主键列
+			render:null,							//单元格渲染
 			
 	        title: null,							//标题
 	        width: 'auto',                          //宽度值
@@ -32,7 +33,11 @@
 	        validateDelete:function(){return true;}			 //删除校验，默认校验通过
 	     	},
 		search:{
-			field:[],//field:[{title:'First Name' field:'firstName',type:'input'}]
+			inputWidth: 170, 
+			labelWidth: 50, 
+			space: 20,
+			field:[],//field:[{ display: "类别 ", name: "CategoryID", newline: true, type: "select", comboboxName: "CategoryName", options: { valueFieldID: "CategoryID" }, width: 240 }]
+			buttons:[],
 			beforeSubmit:function(){return true;}},
 		fields:[]
 	};
@@ -123,6 +128,7 @@
             checkbox: options.grid.checkbox,
             columns:columns,
             usePager: options.grid.pagination,
+            render:options.grid.render,
             
             pageParmName: 'page',               //页索引参数名，(提交给服务器)
 	        pagesizeParmName: 'rows',        	//页记录数参数名，(提交给服务器)
@@ -177,28 +183,57 @@
 	 */
 	Render.prototype.createSearch = function(){
 		if(options.search.field.length==0)return;
-		var searchPanel= $(document.createElement("div"))
-							.attr({'class':'search-form'})
+		
+		$(document.createElement("div"))
+			.attr({'class':'l-clear'})
+			.prependTo($(this.plugin.selector).parent());
+		var searchPanel= $(document.createElement("form"))
+							.attr({'ligerForm':'search-form'})
 							.prependTo($(this.plugin.selector).parent()),
 			$this = this,searchForm;
 		
-		if($.ui.agiledevForm){
-			searchPanel.agiledevForm({
-					field:options.search.field,
-					className:'agiledev-search',
-					submitUrl:options.grid.dataUrl,
-					buttons:$.extend({},{'查询':{iconCls:'icon-search',handler:function(){this.submit();}}},options.search.buttons),
-					beforeSubmit:function(){
-						if(options.search.beforeSubmit){
-							if(options.search.beforeSubmit.call(this.uiForm)){
-								var queryParameters = this.getSearchParameters();
-								$this.reloadDatagrid(queryParameters);
-							}
-						}
-						return false;
+		//构造form查询表单
+		if(options.search.field.length>0){
+			searchPanel.ligerForm({
+				inputWidth: options.search.inputWidth, 
+				labelWidth: options.search.labelWidth, 
+				space: options.search.space,
+				fields:options.search.field
+			});
+			//自定义按钮(随机ID遗留)
+			if(options.search.buttons.length>0){
+				$.each(options.search.buttons,function(i,n){
+					searchPanel.append("<li style='width:100px;text-align:left;'>" +
+							"<input type='button' value='"+n.text+"' " +
+							"id='"+n.id+"' style=' margin-top: 0px;' class='l-button'/></li> ");
+					$("#"+n.id).click(n.handle);
+				});
+			}
+			//默认按钮：查询、重置
+			searchPanel.append("<li style='width:100px;text-align:left;'>" +
+				"<input type='button' value='查  询' id='lbtn-query' style=' margin-top: 0px;' class='l-button'/></li> ");
+			searchPanel.append("<li style='width:100px;text-align:left;'>" +
+				"<input type='reset' value='重  置' id='lbtn-reset' style=' margin-top: 0px;' class='l-button'/></li> ");
+			
+			
+			$("#lbtn-query").click(function(){
+				if(options.search.beforeSubmit){
+					if(options.search.beforeSubmit.call(this.searchPanel)){
+						var data= $([]);
+						data = $.map(options.search.field,function(n,i){
+							var temp = {name:null,value:null};
+							temp.name = n.name;
+							temp.value = $("#"+n.name).val();
+							return temp;
+						});
+						console.log(data);
+						options.globalDatagrid.setOptions({params:data});
+						options.globalDatagrid.loadData(true);
 					}
+				}
 			});
 		}
+		
 		options.globalSearchform = searchPanel;
 	}
 	
@@ -258,6 +293,17 @@
 	  	    	},1500);
 		}
 	}
+	//生成随机数
+	Render.prototype.getRandom = function(){
+		var guid = new Date().getTime(), i;
+
+		for (i = 0; i < 5; i++) {
+			guid += Math.floor(Math.random() * 65535);
+		}
+		
+		return  guid ;
+
+	}
 	/**
 	 * 修改处理函数
 	 */
@@ -305,4 +351,5 @@
 			         ]
 		});
 	}
+	
 })(jQuery);
