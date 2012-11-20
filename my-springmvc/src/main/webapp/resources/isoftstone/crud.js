@@ -20,6 +20,7 @@
 			render:null,							//单元格渲染
 			
 	        title: null,							//标题
+	        align:'center',
 	        width: 'auto',                          //宽度值
 	        height: 'auto',                         //宽度值
 	        dataUrl: false,                         //ajax url
@@ -36,10 +37,22 @@
 			inputWidth: 170, 
 			labelWidth: 50, 
 			space: 20,
-			field:[],//field:[{ display: "类别 ", name: "CategoryID", newline: true, type: "select", comboboxName: "CategoryName", options: { valueFieldID: "CategoryID" }, width: 240 }]
+			//field:[{ display: "类别 ", name: "CategoryID", newline: true, type: "select", comboboxName: "CategoryName", options: { valueFieldID: "CategoryID" }, width: 240 }]
+			field:[],
 			buttons:[],
 			beforeSubmit:function(){return true;}},
-		fields:[]
+			//field:[{ title: "类别 ", field: "CategoryID"(field的字段属性参考ligerForm),
+					//	gridShow:true,addShow:true,updateable:true  }]
+			//gridShow:是否在grid里显示,addShow:是否在新增页面里显示,updateable:该字段是否可以被修改
+		fields:[],
+		dialog:{
+			width: 600, 										//弹出框宽度
+			height: 400,										//弹出框高度
+			addTitle:'新增',										//弹出框新增标题
+			updateTitle:'修改',									//弹出框修改标题	
+			addValidate:function(){return true;}, 				//新增校验方法
+			updateValidate:function(){return true;}				//修改校验方法
+		}
 	};
 	
 	$.fn.crud = function(){
@@ -52,7 +65,12 @@
 			return !!eval(methodName)?eval(methodName).call(this,render,handle,arguments):this;
 		}
 		
-		
+		this.setUrl = function(url){
+			this.globalURL = url;
+		}
+		this.getUrl = function(){
+			return this.globalURL;
+		}
 		this.init = function(){
 			render.createDatagrid();
 			render.createSearch();
@@ -61,13 +79,16 @@
 		function getDatagrid(render,handle,args){
 			return options.globalDatagrid;
 		}
-		
+		function getSearchform(){
+			return options.globalSearchform;
+		}
 		this.getRender = function(){
 			return render;
 		}
 		this.getHandle = function(){
 			return handle;
 		}
+		
 		this.init();
 		return this;
 	}
@@ -86,6 +107,39 @@
 		}else{
 			buttons = $([]);
 		}
+		
+		//构建editFrame的target
+		if(options.grid.addable || options.grid.updateable){
+			$("body").append(" <form id='liger_editform' name='liger_editform'></form>");
+			$("#liger_editform").append("<div id='liger_editTarget' style='width:550px; margin:3px; display:none;'></div>");
+			$("#liger_editTarget").append("<div id='liger_editDiv'></div>");
+			
+			var formData = $([]);
+			formData = $.map(options.fields,function(dom,i){
+				dom = $.extend({addShow:true,updateable:true,display:dom.title,name:dom.field},dom);
+				if(dom.addShow)return dom;
+			});
+			
+			$("#liger_editDiv").ligerForm({
+				inputWidth: 170, 
+				labelWidth: 50, 
+				space: 80,
+				fields:formData
+			});
+			
+			options.globalFormData = formData
+		}
+		
+		//判断是否可以进行新增操作
+		if(options.grid.addable){
+			buttons = buttons.add({
+				id:'btnAdd',
+				text:'新增',
+				icon:'add',
+				click:$this.plugin.getHandle().edit
+			});
+		}
+		
 		//判断是否可以进行删除操作
 		if(options.grid.deleteable){
 			buttons = buttons.add({
@@ -102,7 +156,7 @@
 				id:'btnModify',
 				text:'修改',
 				icon:'modify',
-				click:$this.plugin.getHandle().modify
+				click:$this.plugin.getHandle().edit
 			});
 		}
 		
@@ -129,6 +183,7 @@
             columns:columns,
             usePager: options.grid.pagination,
             render:options.grid.render,
+            align:options.grid.align,
             
             pageParmName: 'page',               //页索引参数名，(提交给服务器)
 	        pagesizeParmName: 'rows',        	//页记录数参数名，(提交给服务器)
@@ -190,7 +245,7 @@
 		var searchPanel= $(document.createElement("form"))
 							.attr({'ligerForm':'search-form'})
 							.prependTo($(this.plugin.selector).parent()),
-			$this = this,searchForm;
+			$this = this,searchForm,selector = $(this.plugin.selector);
 		
 		//构造form查询表单
 		if(options.search.field.length>0){
@@ -200,7 +255,7 @@
 				space: options.search.space,
 				fields:options.search.field
 			});
-			//自定义按钮(随机ID遗留)
+			//自定义按钮
 			if(options.search.buttons.length>0){
 				$.each(options.search.buttons,function(i,n){
 					searchPanel.append("<li style='width:100px;text-align:left;'>" +
@@ -226,9 +281,10 @@
 							temp.value = $("#"+n.name).val();
 							return temp;
 						});
-						console.log(data);
-						options.globalDatagrid.setOptions({params:data});
-						options.globalDatagrid.loadData(true);
+						var gridManager = selector.ligerGetGridManager(); 
+						
+						gridManager.setOptions({parms:data});
+						gridManager.loadData(true);
 					}
 				}
 			});
@@ -249,14 +305,7 @@
 	 */
 	Handle.prototype.remove=function(){
 		var rows = options.globalDatagrid.getSelectedRows(),$this = this;
-		if(!options.grid.validateDelete()){
-	  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: '自定义删除校验不通过!'});
-	  	    tip.show();
-	  	    setTimeout(function (){
-	  	    		tip.hide();
-	  	    	},1500);
-	  	    return ;
-		}
+		if(!options.grid.validateDelete())return ;
 		
 		if(rows.length>0){
 			$.ligerDialog.confirm('确定删除选中的数据吗?', 
@@ -304,11 +353,28 @@
 		return  guid ;
 
 	}
+
 	/**
-	 * 修改处理函数
+	 * 新增处理函数
 	 */
-	Handle.prototype.modify=function(){
-		$this.plugin.getHandle().createDialog();
+	Handle.prototype.edit=function(item){
+		
+		if(item.id == "btnAdd"){
+			$.each(options.globalFormData,function(i,n){
+					$("#"+n.name).val("");
+				});
+			options.globalSaveType="add";
+            $this.plugin.getHandle().createDialog(options.dialog.addTitle);
+        } else{
+        	$.each(options.globalFormData,function(i,n){
+        		$("#"+n.name).val(options.globalDatagrid.getSelectedRow()[n.name]);
+        		//不能修改的字段
+        		if(!n.updateable)$("#"+n.name).attr("disabled","disabled");
+			});
+        	options.globalSaveType="update";
+        	$this.plugin.getHandle().createDialog(options.dialog.updateTitle);
+        }
+		
 	}
 	/**
 	 * 处理选中checkbox
@@ -322,34 +388,111 @@
 		}
 		
 		if(removeable){
-			$("[toolbarid='btnDelete']").bind('click',$this.plugin.getHandle().remove);
     		$("[toolbarid='btnDelete']").hover(function(){$(this).addClass('l-panel-btn-over');}
     											,function(){$(this).removeClass('l-panel-btn-over');});
     		$(".l-icon.l-icon-undelete").removeClass('l-icon-undelete').toggleClass('l-icon-delete');
+    		$("[toolbarid='btnDelete']").bind('click',$this.plugin.getHandle().remove);
     	}else{
     		$(".l-icon.l-icon-delete").removeClass('l-icon-delete').toggleClass('l-icon-undelete');
     		$("[toolbarid='btnDelete']").unbind('mouseenter mouseleave click');  
     	}
 		
 		if(options.globalDatagrid.getSelectedRows().length==1){
-			$("[toolbarid='btnModify']").bind('click',$this.plugin.getHandle().modify);
     		$("[toolbarid='btnModify']").hover(function(){$(this).addClass('l-panel-btn-over');}
     											,function(){$(this).removeClass('l-panel-btn-over');});
     		$(".l-icon.l-icon-unmodify").removeClass('l-icon-unmodify').toggleClass('l-icon-modify');
+    		$("[toolbarid='btnModify']").bind('click',$this.plugin.getHandle().edit);
 		}else{
 			$(".l-icon.l-icon-modify").removeClass('l-icon-modify').toggleClass('l-icon-unmodify');
     		$("[toolbarid='btnModify']").unbind('mouseenter mouseleave click'); 
 		}
 	}
 	
-	Handle.prototype.createDialog=function(title,data){
-		options._dialog = $.ligerDialog.open({
+	Handle.prototype.createDialog=function(title){
+		if(options._dialog==null){
+			options._dialog = $.ligerDialog.open({
+				target:$("#liger_editDiv"),
+				title: title, 
+				name:'editItemFrame',
+				width: options.dialog.width, 
+				height: options.dialog.height,
+				buttons:[{text:'取消' , onclick: function (i, d) { $("input").ligerHideTip(); d.hide(); }},
+				         {text:'保存' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }}]
+			});
 			
-			title:title,
-			buttons:[{text:'保存'},
-			         {text:'取消'}
-			         ]
-		});
+		   $(".l-dialog-close").bind('mousedown',
+				   function(){                    
+	                    $("input").ligerHideTip(); 
+	                    options._dialog.hide();
+	                }); 
+		   
+		   $(".l-dialog-title").bind('mousedown',function()   //移动dialog时,隐藏tip
+	                {$("input").ligerHideTip();});
+		}else{
+			options._dialog.show();
+		}
+	}
+	
+	Handle.prototype.save=function(){
+		if(options.globalSaveType == "add"){
+			if(options.dialog.addValidate()){
+				options._dialog.hide();
+				
+				var data= {};
+				data = $.map(options.globalFormData,function(n,i){
+					var temp={};
+					temp[n.name]=$("#"+n.field).val();
+					return temp;
+				});
+				alert(data);
+				$.ajax({
+					   type: "POST",
+					   url: options.saveUrl,
+					   data: data,
+					   success: function(operationPrompt){
+					     alert( "Data Saved: " + operationPrompt.msg );
+					   }
+					});
+			}else{
+				return;
+			}
+		}else if(options.globalSaveType == "update"){
+			if(options.dialog.updateValidate()){
+
+				options._dialog.hide();
+				var params={};
+				$.map(options.globalFormData,function(n,i){
+						return params[n.name]=$("#"+n.field).val();
+					}).join(',');
+				$.ajax({
+					   type: "POST",
+					   url: options.updateUrl,
+					   data: params,
+					   success: function(data){
+							if(typeof data == "string") data = eval('(' + data + ')');
+						  	if(data.success){
+						  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
+						  	    tip.show();
+						  	    setTimeout(function (){
+						  	    		tip.hide();
+						  	    		options.globalDatagrid.loadData(true);
+						  	    	},1500);
+							}else{
+						  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
+						  	    tip.show();
+						  	    setTimeout(function (){
+						  	    		tip.hide();
+						  	    	},1500);
+							}
+						 }
+					});
+			
+			}else{
+				return;
+			}
+		}else{
+			return;
+		}
 	}
 	
 })(jQuery);

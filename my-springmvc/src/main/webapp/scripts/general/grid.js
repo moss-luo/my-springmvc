@@ -1,6 +1,8 @@
 $(function() {
 	var options = {
 		removeUrl : 'delete.do',
+		saveUrl : 'add.do',
+		updateUrl : 'modify.do',
 		grid : {
 			dataUrl : 'grid.do',
 			idField : 'id',
@@ -10,7 +12,7 @@ $(function() {
 			checkbox : true,
 			validateDelete : function() {
 				var grid = $("#maingrid").crud("getDatagrid").getSelectedRows();
-				if(grid.length>1)return false;
+				//if(grid.length>1)return false;
 				
 				return true;
 			},
@@ -23,20 +25,25 @@ $(function() {
 		},
 		fields : [ {
 			title : '主键',
-			field : 'id'
+			field : 'id',
+//			newline :false
+				
 		}, {
 			title : '名字',
-			field : 'username'
+			field : 'username',
+			newline :false
 		}, {
 			title : '年龄',
-			field : 'age'
+			field : 'age',
+			type:'date'
 		}, {
 			title : '英文名',
-			field : 'enName'
+			field : 'enName',
+			newline :false
 		} ],
 		search:{
 			field:[
-			       {display:'用户名',name:'username', newline: false,type:'text'},
+			       {display:'用户名',name:'username1', newline: false,type:'text'},
 			       {display: "日期 ", name: "createdate", newline: false, type: "date"},
 			],
 			buttons:[{text:'测试',id:'test',handle:function(){alert("OK");}}],

@@ -49,6 +49,18 @@ public class GeneralController {
 	public @ResponseBody OperationPrompt delete(@RequestParam("ids") String ids) {
 		return new OperationPrompt("删除操作成功！",true);
 	}
+	
+	@RequestMapping
+	public @ResponseBody OperationPrompt add(UserModel user) {
+		System.out.println(user.getUsername());
+		return new OperationPrompt("新增操作成功！",true);
+	}
+	
+	@RequestMapping
+	public @ResponseBody OperationPrompt modify(UserModel user) {
+		System.out.println(user.getUsername());
+		return new OperationPrompt("修改操作成功！",true);
+	}
 
 	@RequestMapping
 	public @ResponseBody
