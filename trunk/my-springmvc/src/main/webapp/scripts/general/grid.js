@@ -26,7 +26,6 @@ $(function() {
 		fields : [ {
 			title : '主键',
 			field : 'id',
-//			newline :false
 				
 		}, {
 			title : '名字',
@@ -34,12 +33,12 @@ $(function() {
 			newline :false
 		}, {
 			title : '年龄',
-			field : 'age',
-			type:'date'
+			field : 'age'
 		}, {
 			title : '英文名',
 			field : 'enName',
-			newline :false
+			newline :false,
+			updateable:false
 		} ],
 		search:{
 			field:[

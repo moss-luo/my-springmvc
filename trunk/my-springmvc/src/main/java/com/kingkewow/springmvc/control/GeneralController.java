@@ -35,12 +35,16 @@ public class GeneralController {
 		System.out.println(username);
 		UserModel user = new UserModel("1", "测试名称1", 23, "TEST");
 		UserModel user2 = new UserModel("2", "测试名称2", 25, "TEST2");
+		UserModel user3 = new UserModel("3", "测试名称3", 23, "TEST3");
+		UserModel user4 = new UserModel("4", "测试名称4", 25, "TEST4");
 		List<UserModel> list = new ArrayList<UserModel>();
 		list.add(user);
 		list.add(user2);
+		list.add(user3);
+		list.add(user4);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("total", 10);
+		map.put("total", 4);
 		map.put("rows", list);
 		return map;
 	}
