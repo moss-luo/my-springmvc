@@ -220,16 +220,7 @@
             toolbar:{items:buttons}
 		});
 		
-		if(options.grid.singleSelect){
-			$(".l-grid-hd-cell-btn-checkbox").css("display", "none");　//隐藏checkAll
-		}
-		$("#pageloading").hide();
-		
-		$(".l-icon.l-icon-delete").removeClass('l-icon-delete').toggleClass('l-icon-undelete');
-		$("[toolbarid='btnDelete']").unbind('mouseenter mouseleave click');  
-		
-		$(".l-icon.l-icon-modify").removeClass('l-icon-modify').toggleClass('l-icon-unmodify');
-		$("[toolbarid='btnModify']").unbind('mouseenter mouseleave click'); 
+		$this.plugin.getHandle().initGrid();
 		
 	}
 	
@@ -304,7 +295,7 @@
 	 * 删除选中行
 	 */
 	Handle.prototype.remove=function(){
-		var rows = options.globalDatagrid.getSelectedRows(),$this = this;
+		var rows = options.globalDatagrid.getSelectedRows();
 		if(!options.grid.validateDelete())return ;
 		
 		if(rows.length>0){
@@ -313,24 +304,11 @@
 		            if(yes){
 						$.ajax({
 							url:options.removeUrl,
+							dataType:'json',
 							data:{ids:$.map(rows,function(n){return n[options.grid.idField];}).join(',')},
 							success: function(data){
-								if(typeof data == "string") data = eval('(' + data + ')');
-							  	if(data.success){
-							  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
-							  	    tip.show();
-							  	    setTimeout(function (){
-							  	    		tip.hide();
-							  	    		options.globalDatagrid.loadData(true);
-							  	    	},1500);
-								}else{
-							  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
-							  	    tip.show();
-							  	    setTimeout(function (){
-							  	    		tip.hide();
-							  	    	},1500);
-								}
-							 }
+								$this.plugin.getHandle().tip(data);
+							}
 						});
 		            }
 		        });	
@@ -381,6 +359,7 @@
 	 */
 	Handle.prototype.selectHandle=function(){
 		var removeable = false;
+		if($("[toolbarid='btnDelete']").data("del_event") == undefined)$("[toolbarid='btnDelete']").data("del_event",false);
 		if(options.grid.bulkDeleteable){
 			removeable = options.globalDatagrid.getSelectedRows().length>0;
 		}else{
@@ -391,10 +370,14 @@
     		$("[toolbarid='btnDelete']").hover(function(){$(this).addClass('l-panel-btn-over');}
     											,function(){$(this).removeClass('l-panel-btn-over');});
     		$(".l-icon.l-icon-undelete").removeClass('l-icon-undelete').toggleClass('l-icon-delete');
-    		$("[toolbarid='btnDelete']").bind('click',$this.plugin.getHandle().remove);
+    		if(!$("[toolbarid='btnDelete']").data("del_event")){
+    			$("[toolbarid='btnDelete']").bind('click',$this.plugin.getHandle().remove);
+    			$("[toolbarid='btnDelete']").data("del_event",true);	
+    		}
     	}else{
     		$(".l-icon.l-icon-delete").removeClass('l-icon-delete').toggleClass('l-icon-undelete');
-    		$("[toolbarid='btnDelete']").unbind('mouseenter mouseleave click');  
+    		$("[toolbarid='btnDelete']").unbind('mouseenter mouseleave click');
+    		$("[toolbarid='btnDelete']").data("del_event",false);
     	}
 		
 		if(options.globalDatagrid.getSelectedRows().length==1){
@@ -434,65 +417,77 @@
 	}
 	
 	Handle.prototype.save=function(){
+		var url,params={};
 		if(options.globalSaveType == "add"){
 			if(options.dialog.addValidate()){
 				options._dialog.hide();
-				
-				var data= {};
-				data = $.map(options.globalFormData,function(n,i){
-					var temp={};
-					temp[n.name]=$("#"+n.field).val();
-					return temp;
-				});
-				alert(data);
-				$.ajax({
-					   type: "POST",
-					   url: options.saveUrl,
-					   data: data,
-					   success: function(operationPrompt){
-					     alert( "Data Saved: " + operationPrompt.msg );
-					   }
-					});
+				url = options.saveUrl;
+				$.map(options.globalFormData,function(n,i){
+						return params[n.name]=$("#"+n.field).val();
+					}).join(',');
 			}else{
 				return;
 			}
 		}else if(options.globalSaveType == "update"){
 			if(options.dialog.updateValidate()){
-
 				options._dialog.hide();
-				var params={};
+				url = options.updateUrl;
 				$.map(options.globalFormData,function(n,i){
-						return params[n.name]=$("#"+n.field).val();
+						if(n.updateable)return params[n.name]=$("#"+n.field).val();
+						return ;
 					}).join(',');
-				$.ajax({
-					   type: "POST",
-					   url: options.updateUrl,
-					   data: params,
-					   success: function(data){
-							if(typeof data == "string") data = eval('(' + data + ')');
-						  	if(data.success){
-						  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
-						  	    tip.show();
-						  	    setTimeout(function (){
-						  	    		tip.hide();
-						  	    		options.globalDatagrid.loadData(true);
-						  	    	},1500);
-							}else{
-						  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
-						  	    tip.show();
-						  	    setTimeout(function (){
-						  	    		tip.hide();
-						  	    	},1500);
-							}
-						 }
-					});
-			
 			}else{
 				return;
 			}
 		}else{
 			return;
 		}
+		
+		$.ajax({
+			   type: "POST",
+			   url: url,
+			   dataType:'json',
+			   data: params,
+			   success: function(data){
+				   //回调
+				   $this.plugin.getHandle().tip(data);
+			   }
+			});
+	}
+	
+	Handle.prototype.tip=function(data){
+		
+	  	if(data.success){
+	  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
+	  	    tip.show();
+	  	    setTimeout(function (){
+	  	    		tip.hide();
+	  	    		options.globalDatagrid.loadData(true);
+	  	    		$this.plugin.getHandle().initGrid();
+	  	    		if($(".l-grid-hd-row").hasClass('l-checked')) $(".l-grid-hd-row").removeClass('l-checked');
+	  	    		if(typeof data == "string") data = eval('(' + data + ')');
+	  	    	},1500);
+		}else{
+	  		var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: data.msg });
+	  	    tip.show();
+	  	    setTimeout(function (){
+	  	    		tip.hide();
+	  	    	},1500);
+		}
+	}
+	
+	Handle.prototype.initGrid=function(){
+		if(options.grid.singleSelect){
+			$(".l-grid-hd-cell-btn-checkbox").css("display", "none");　//隐藏checkAll
+		}
+		$("#pageloading").hide();
+		
+		$(".l-icon.l-icon-delete").removeClass('l-icon-delete').toggleClass('l-icon-undelete');
+		$("[toolbarid='btnDelete']").unbind('mouseenter mouseleave click');  
+		$("[toolbarid='btnDelete']").data("del_event",false);
+		
+		$(".l-icon.l-icon-modify").removeClass('l-icon-modify').toggleClass('l-icon-unmodify');
+		$("[toolbarid='btnModify']").unbind('mouseenter mouseleave click'); 
 	}
 	
 })(jQuery);
