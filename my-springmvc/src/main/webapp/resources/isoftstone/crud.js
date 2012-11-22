@@ -41,7 +41,7 @@
 			field:[],
 			buttons:[],
 			beforeSubmit:function(){return true;}},
-			//field:[{ title: "类别 ", field: "CategoryID"(field的字段属性参考ligerForm),
+			//fields:[{ title: "类别 ", field: "CategoryID"(field的字段属性参考ligerForm),
 					//	gridShow:true,addShow:true,updateable:true  }]
 			//gridShow:是否在grid里显示,addShow:是否在新增页面里显示,updateable:该字段是否可以被修改
 		fields:[],
@@ -420,6 +420,9 @@
 		var url,params={};
 		if(options.globalSaveType == "add"){
 			if(options.dialog.addValidate()){
+				
+//				$this.plugin.getHandle().validate();
+				
 				options._dialog.hide();
 				url = options.saveUrl;
 				$.map(options.globalFormData,function(n,i){
@@ -490,4 +493,7 @@
 		$("[toolbarid='btnModify']").unbind('mouseenter mouseleave click'); 
 	}
 	
+	Handle.prototype.validate=function(form){
+		$("#"+form).validate(options.fields.rules,options.fields.messages);
+	}
 })(jQuery);
