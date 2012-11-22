@@ -13,7 +13,6 @@ $(function() {
 			validateDelete : function() {
 				var grid = $("#maingrid").crud("getDatagrid").getSelectedRows();
 				//if(grid.length>1)return false;
-				
 				return true;
 			},
 			toolbars:{items:{
@@ -24,9 +23,8 @@ $(function() {
 			}}
 		},
 		fields : [ {
-			title : '主键',
-			field : 'id',
-				
+			display : '主键',//display或者title都行
+			name : 'id'		//name或者field都行
 		}, {
 			title : '名字',
 			field : 'username',
@@ -34,6 +32,7 @@ $(function() {
 		}, {
 			title : '年龄',
 			field : 'age'
+			
 		}, {
 			title : '英文名',
 			field : 'enName',
@@ -45,7 +44,7 @@ $(function() {
 			       {display:'用户名',name:'username1', newline: false,type:'text'},
 			       {display: "日期 ", name: "createdate", newline: false, type: "date"},
 			],
-			buttons:[{text:'测试',id:'test',handle:function(){alert("OK");}}],
+			buttons:[{text:'测试',id:'test',handle:function(){alert("test");}}],
 			beforeSubmit:function(){
 				return true;
 			}
