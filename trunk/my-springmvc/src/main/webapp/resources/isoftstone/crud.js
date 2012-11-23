@@ -46,6 +46,9 @@
 			//gridShow:是否在grid里显示,addShow:是否在新增页面里显示,updateable:该字段是否可以被修改
 		fields:[],
 		dialog:{
+			inputWidth: 170, 
+			labelWidth: 50, 
+			space: 20,
 			width: 600, 										//弹出框宽度
 			height: 400,										//弹出框高度
 			addTitle:'新增',										//弹出框新增标题
@@ -116,14 +119,15 @@
 			
 			var formData = $([]);
 			formData = $.map(options.fields,function(dom,i){
-				dom = $.extend({addShow:true,updateable:true,display:dom.title,name:dom.field},dom);
+				dom = $.extend({addShow:true,updateable:true,display:dom.title,
+								name:dom.field,width:dom.dialogWidth},dom);
 				if(dom.addShow)return dom;
 			});
 			
 			$("#liger_editDiv").ligerForm({
-				inputWidth: 170, 
-				labelWidth: 50, 
-				space: 80,
+				inputWidth: options.dialog.inputWidth, 
+				labelWidth: options.dialog.labelWidth, 
+				space: options.dialog.space,
 				fields:formData
 			});
 			
@@ -163,7 +167,7 @@
 		
 		//fields:[{name:'First Name',field:'firstName',class:'',show:true,frozen:false,type:'input',required,validateType:'',sortable:true}]  show:是否在grid里显示,frozen:是否在grid里冻结
 		$.each(options.fields,function(i,f){
-			var c = $.extend({display:f.title,name:f.field,width:"",checkbox:false},f);
+			var c = $.extend({display:f.title,name:f.field,width:f.gridWidth,checkbox:false},f);
 			if(f.frozen == true){ 
 				frozenColumns = frozenColumns.add(c);
 			}else if(f.gridShow != false){
@@ -189,8 +193,8 @@
 	        pagesizeParmName: 'rows',        	//页记录数参数名，(提交给服务器)
 	        sortnameParmName: 'sort',        	//页排序列名(提交给服务器)
 	        sortorderParmName: 'order',     	//页排序方向(提交给服务器)
-	        root: 'rows',                       //数据源字段名
-	        record: 'total',                    //数据源记录数字段名
+	        root: 'Rows',                       //数据源字段名
+	        record: 'Total',                    //数据源记录数字段名
 	        
 	        onCheckRow: function(checked, rowdata, rowindex) {
 	        	if(options.grid.singleSelect){
@@ -269,7 +273,7 @@
 						data = $.map(options.search.field,function(n,i){
 							var temp = {name:null,value:null};
 							temp.name = n.name;
-							temp.value = $("#"+n.name).val();
+							temp.value = $("[name='"+n.name+"']").val();
 							return temp;
 						});
 						var gridManager = selector.ligerGetGridManager(); 
@@ -339,15 +343,15 @@
 		
 		if(item.id == "btnAdd"){
 			$.each(options.globalFormData,function(i,n){
-					$("#"+n.name).val("");
+				$("[name='"+n.name+"']").val("");
 				});
 			options.globalSaveType="add";
             $this.plugin.getHandle().createDialog(options.dialog.addTitle);
         } else{
         	$.each(options.globalFormData,function(i,n){
-        		$("#"+n.name).val(options.globalDatagrid.getSelectedRow()[n.name]);
+        		$("[name='"+n.name+"']").val(options.globalDatagrid.getSelectedRow()[n.name]);
         		//不能修改的字段
-        		if(!n.updateable)$("#"+n.name).attr("disabled","disabled");
+        		if(!n.updateable)$("[name='"+n.name+"']").attr("disabled","disabled");
 			});
         	options.globalSaveType="update";
         	$this.plugin.getHandle().createDialog(options.dialog.updateTitle);
@@ -391,6 +395,9 @@
 		}
 	}
 	
+	/**
+	 * 创建dialog
+	 */
 	Handle.prototype.createDialog=function(title){
 		if(options._dialog==null){
 			options._dialog = $.ligerDialog.open({
@@ -426,7 +433,11 @@
 				options._dialog.hide();
 				url = options.saveUrl;
 				$.map(options.globalFormData,function(n,i){
-						return params[n.name]=$("#"+n.field).val();
+						if(n.strutsFieldName){
+							return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+						}else{
+							return params[n.name]=$("[name='"+n.name+"']").val();
+						}
 					}).join(',');
 			}else{
 				return;
@@ -436,7 +447,13 @@
 				options._dialog.hide();
 				url = options.updateUrl;
 				$.map(options.globalFormData,function(n,i){
-						if(n.updateable)return params[n.name]=$("#"+n.field).val();
+						if(n.updateable){
+							if(n.strutsFieldName){
+								return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+							}else{
+								return params[n.name]=$("[name='"+n.name+"']").val();
+							}
+						}
 						return ;
 					}).join(',');
 			}else{
