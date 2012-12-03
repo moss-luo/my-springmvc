@@ -207,4 +207,8 @@ width: 100%;
 /* -----------------------
    *   验证 *
 * ----------------------- */
+.errorInput{
+	border-style:solid;
+	border-color:red;
+}
  

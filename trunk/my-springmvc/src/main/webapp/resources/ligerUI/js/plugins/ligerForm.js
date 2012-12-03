@@ -68,6 +68,9 @@
                     inputOptions.number = true;
                     jinput.ligerTextBox(inputOptions);
                     break;
+                case "file":
+                	alert("file");
+                	break;
                 case "int":
                 case "digits":
                     inputOptions.digits = true;
@@ -88,6 +91,7 @@
         {
             jinput.addClass("l-textarea");
         }
+       
     }
 
     //表单组件
