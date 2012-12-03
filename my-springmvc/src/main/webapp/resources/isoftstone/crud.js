@@ -5,7 +5,6 @@
 
 (function($){
 	var options={
-		formInitUrl:'',//表单初始化地址
 		saveUrl:"",//新增url
 		updateUrl:"",//修改url
 		removeUrl:"",//删除url
@@ -55,6 +54,10 @@
 			updateTitle:'修改',									//弹出框修改标题	
 			addValidate:function(){return true;}, 				//新增校验方法
 			updateValidate:function(){return true;}				//修改校验方法
+		},
+		validate:{
+			rules:{},
+			message:{}
 		}
 	};
 	
@@ -75,8 +78,11 @@
 			return this.globalURL;
 		}
 		this.init = function(){
-			render.createDatagrid();
 			render.createSearch();
+			render.createDatagrid();
+			if(options.validate&&options.validate.rules){
+				handle.validate();
+			}
 		}
 		//对外接口，返回datagrid
 		function getDatagrid(render,handle,args){
@@ -91,7 +97,6 @@
 		this.getHandle = function(){
 			return handle;
 		}
-		
 		this.init();
 		return this;
 	}
@@ -113,9 +118,8 @@
 		
 		//构建editFrame的target
 		if(options.grid.addable || options.grid.updateable){
-			$("body").append(" <form id='liger_editform' name='liger_editform'></form>");
-			$("#liger_editform").append("<div id='liger_editTarget' style='width:550px; margin:3px; display:none;'></div>");
-			$("#liger_editTarget").append("<div id='liger_editDiv'></div>");
+			$("body").append("<div id='liger_editTarget' style='width:550px; margin:3px; display:none;'></div>");
+			$("#liger_editTarget").append(" <form id='liger_editform' name='liger_editform'></form>");
 			
 			var formData = $([]);
 			formData = $.map(options.fields,function(dom,i){
@@ -124,7 +128,7 @@
 				if(dom.addShow)return dom;
 			});
 			
-			$("#liger_editDiv").ligerForm({
+			$("#liger_editform").ligerForm({
 				inputWidth: options.dialog.inputWidth, 
 				labelWidth: options.dialog.labelWidth, 
 				space: options.dialog.space,
@@ -193,8 +197,8 @@
 	        pagesizeParmName: 'rows',        	//页记录数参数名，(提交给服务器)
 	        sortnameParmName: 'sort',        	//页排序列名(提交给服务器)
 	        sortorderParmName: 'order',     	//页排序方向(提交给服务器)
-	        root: 'Rows',                       //数据源字段名
-	        record: 'Total',                    //数据源记录数字段名
+	        root: 'rows',                       //数据源字段名
+	        record: 'total',                    //数据源记录数字段名
 	        
 	        onCheckRow: function(checked, rowdata, rowindex) {
 	        	if(options.grid.singleSelect){
@@ -242,13 +246,20 @@
 							.prependTo($(this.plugin.selector).parent()),
 			$this = this,searchForm,selector = $(this.plugin.selector);
 		
+		var searchField = $.extend(true,[],options.search.field);
+		
+		$.each(searchField,function(i,dom){
+			dom.name = "searchForm_"+dom.name;
+		});
+		
 		//构造form查询表单
 		if(options.search.field.length>0){
+			
 			searchPanel.ligerForm({
 				inputWidth: options.search.inputWidth, 
 				labelWidth: options.search.labelWidth, 
 				space: options.search.space,
-				fields:options.search.field
+				fields:searchField
 			});
 			//自定义按钮
 			if(options.search.buttons.length>0){
@@ -273,7 +284,7 @@
 						data = $.map(options.search.field,function(n,i){
 							var temp = {name:null,value:null};
 							temp.name = n.name;
-							temp.value = $("[name='"+n.name+"']").val();
+							temp.value = $("[name='"+searchField[i].name+"']").val();
 							return temp;
 						});
 						var gridManager = selector.ligerGetGridManager(); 
@@ -401,34 +412,39 @@
 	Handle.prototype.createDialog=function(title){
 		if(options._dialog==null){
 			options._dialog = $.ligerDialog.open({
-				target:$("#liger_editDiv"),
+				target:$("#liger_editform"),
 				title: title, 
 				name:'editItemFrame',
 				width: options.dialog.width, 
 				height: options.dialog.height,
-				buttons:[{text:'取消' , onclick: function (i, d) { $("input").ligerHideTip(); d.hide(); }},
-				         {text:'保存' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }}]
+				buttons:[{text:'保存' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }},
+				         {text:'取消' , onclick: function (i, d) { $("input").ligerHideTip(); d.hide();$(".errorInput").removeClass('errorInput'); }}]
 			});
 			
 		   $(".l-dialog-close").bind('mousedown',
 				   function(){                    
 	                    $("input").ligerHideTip(); 
 	                    options._dialog.hide();
+	                    $(".errorInput").removeClass('errorInput');
 	                }); 
 		   
 		   $(".l-dialog-title").bind('mousedown',function()   //移动dialog时,隐藏tip
 	                {$("input").ligerHideTip();});
+		   
+		   
 		}else{
 			options._dialog.show();
 		}
 	}
 	
 	Handle.prototype.save=function(){
+		if(options._globalFormValidator){
+			if(!options._globalFormValidator.form())return;
+		}
+		
 		var url,params={};
 		if(options.globalSaveType == "add"){
 			if(options.dialog.addValidate()){
-				
-//				$this.plugin.getHandle().validate();
 				
 				options._dialog.hide();
 				url = options.saveUrl;
@@ -510,7 +526,24 @@
 		$("[toolbarid='btnModify']").unbind('mouseenter mouseleave click'); 
 	}
 	
-	Handle.prototype.validate=function(form){
-		$("#"+form).validate(options.fields.rules,options.fields.messages);
+	Handle.prototype.validate=function(){
+		
+		options._globalFormValidator=$("#liger_editform").validate({
+			 rules: options.validate.rules,
+			 messages: options.validate.messages,
+			 showErrors:function(errorMap,errorList) {
+					$(".errorInput").removeClass('errorInput');
+					if(errorList.length>0){
+						$.each(errorList,function(i,dom){
+							$(dom.element).parent().toggleClass('errorInput');;
+						});
+						
+						var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: errorList[0].message });
+				  	    tip.show();
+				  	    setTimeout(function (){tip.hide();},1500);
+					}
+				 },
+			onkeyup:false
+		});
 	}
 })(jQuery);
