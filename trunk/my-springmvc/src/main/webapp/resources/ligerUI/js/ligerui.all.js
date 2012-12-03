@@ -5296,7 +5296,7 @@
 		//处理上传
 		_handleFileUpload:function(field){
 			var setting = field.upload;
-
+			
 		},
 		
         _buliderControl: function (field)
