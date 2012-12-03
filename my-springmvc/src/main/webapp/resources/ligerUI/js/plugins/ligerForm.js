@@ -1,5 +1,4 @@
-﻿/**
-* jQuery ligerUI 1.1.9
+﻿/* jQuery ligerUI 1.1.9
 * 
 * http://ligerui.com
 *  
@@ -44,6 +43,7 @@
         var g = this, p = this.options;
         var inputOptions = {};
         if (p.inputWidth) inputOptions.width = p.inputWidth;
+        inputOptions.fields=p.fields; 
         if (jinput.is("select"))
         {
             jinput.ligerComboBox(inputOptions);
@@ -63,14 +63,14 @@
                 case "date":
                     jinput.ligerDateEditor(inputOptions);
                     break;
+                case "file":
+                    jinput.ligerFile(inputOptions);
+                    break;
                 case "float":
                 case "number":
                     inputOptions.number = true;
                     jinput.ligerTextBox(inputOptions);
                     break;
-                case "file":
-                	alert("file");
-                	break;
                 case "int":
                 case "digits":
                     inputOptions.digits = true;
@@ -91,7 +91,6 @@
         {
             jinput.addClass("l-textarea");
         }
-       
     }
 
     //表单组件
@@ -161,7 +160,9 @@
                     out.push(g._buliderLabelContainer(field));
                     //append input 
                     out.push(g._buliderControlContainer(field));
-                    //append space
+
+					if(field.type=="file")out.push(g._builderFileControlContainer(field));
+					 //append space
                     out.push(g._buliderSpaceContainer(field));
                 });
                 if (appendULStartTag)
@@ -221,6 +222,7 @@
             }
             out.push('">');
             out.push(g._buliderControl(field));
+
             out.push('</li>');
             return out.join('');
         },
@@ -239,6 +241,33 @@
             out.push('</li>');
             return out.join('');
         },
+		//创建浏览、上传按钮
+		_builderFileControlContainer:function(field){
+			var g = this, p = this.options;
+            var spaceWidth = field.space || field.spaceWidth || p.space;
+			var uploadBrowseId = "liger_uploadBrowse_"+field.name;
+			var uploadSubmitId = "liger_uploadSubmit_"+field.name;
+			if(field.upload){
+				if(field.upload.uploadBrowseId)uploadBrowseId=field.upload.uploadBrowseId;
+				if(field.upload.uploadSubmitId)uploadSubmitId=field.upload.uploadSubmitId;
+			}else{
+				throw new Error("field中file类型的upload属性为空，请指定！");
+			}
+            var out = [];
+			 
+            out.push('<li style="margin-left:10px;text-align:left;');
+            out.push('">');
+			out.push('<input name="button" type="button" id="'+uploadBrowseId+'" class="l-button-file"  value="浏览..." />');
+			if(!field.upload.autoSubmit){
+				out.push('<input type="button" style="margin-left:5px;" id="'+uploadSubmitId+'" class="l-button-file"  value="上传" />');
+			}
+            
+            out.push('</li>');
+            
+            return out.join('');
+		},
+		
+		
         _buliderControl: function (field)
         {
             var g = this, p = this.options;
@@ -261,6 +290,7 @@
             {
                 out.push('<input type="radio" ');
             }
+            
             else if (field.type == "password")
             {
                 out.push('<input type="password" ');
@@ -311,6 +341,7 @@
                 out.push(" validate='" + p.toJSON(field.validate) + "' ");
             }
             out.push(' />');
+  
             return out.join('');
         }
     });

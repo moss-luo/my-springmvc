@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.kingkewow.springmvc.common.OperationPrompt;
 import com.kingkewow.springmvc.model.ParamModel;
@@ -66,10 +67,9 @@ public class GeneralController {
 		return new OperationPrompt("修改操作成功！",true);
 	}
 
+	@SuppressWarnings("unused")
 	@RequestMapping
-	public @ResponseBody
-	String upload(@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file) throws Exception {
+	public @ResponseBody String upload(@RequestParam("file") CommonsMultipartFile file) throws Exception {
 		if (!file.isEmpty()) {
 			byte[] bytes = file.getBytes();
 			// store the bytes somewhere

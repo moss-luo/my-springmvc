@@ -10,34 +10,43 @@ $(function() {
 			width : '99.9%',
 			height : '95%',
 			checkbox : true,
-			validateDelete : function() {
-				var grid = $("#maingrid").crud("getDatagrid").getSelectedRows();
-				//if(grid.length>1)return false;
-				return true;
-			},
-			toolbars:{items:{
-				id:'test',
-				icon:'add',
-				text:'测试',
-				click:addItem
-			}}
 		},
 		fields : [ {
 			display : '主键',//display或者title都行
 			name : 'id'		//name或者field都行
 		}, {
 			title : '名字',
-			field : 'username',
-			newline :false
+			field : 'username'
+			
 		}, {
 			title : '年龄',
-			field : 'age'
-			
+			field : 'age',
 		}, {
 			title : '英文名',
 			field : 'enName',
-			newline :false,
 			updateable:false
+		} ,{
+			title : '测试上传',
+			field : 'testUpload',
+			type:'file',
+			upload:{
+				uploadBrowseId:'upload_button',
+				uploadSubmitId:'submit_button',
+				action:'upload.do',
+				autoSubmit:false,
+				name:'file',
+//				onChange:function(file, extension){
+//					console.log(extension.toLowerCase());
+//				},
+				onComplete:function(data,ex){
+					console.log(ex);
+					console.log(data);
+				},
+				beforeSubmit:function(){
+					console.log("ok");
+				}
+				
+			}
 		} ],
 		search:{
 			field:[
@@ -45,10 +54,12 @@ $(function() {
 			       {display: "日期 ", name: "createdate", newline: false, type: "date"},
 			],
 			buttons:[{text:'测试',id:'test',handle:function(){alert("test");}}],
-			beforeSubmit:function(){
-				return true;
-			}
-	 	}
+	 	},
+	 	dialog : {
+			labelWidth : 80,
+			height : 300,
+			width : 400,
+		},
 		
 	}
 	$("#maingrid").crud(options);
