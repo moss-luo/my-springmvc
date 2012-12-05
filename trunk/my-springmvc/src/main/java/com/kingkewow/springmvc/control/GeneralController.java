@@ -10,10 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.kingkewow.springmvc.common.OperationPrompt;
+import com.kingkewow.springmvc.model.ComboboxData;
 import com.kingkewow.springmvc.model.ParamModel;
 import com.kingkewow.springmvc.model.UserModel;
 
@@ -66,7 +66,25 @@ public class GeneralController {
 		System.out.println(user.getUsername());
 		return new OperationPrompt("修改操作成功！",true);
 	}
-
+	
+	@RequestMapping
+	public @ResponseBody List<ComboboxData> select(){
+		List<ComboboxData> list = new ArrayList<ComboboxData>();
+		ComboboxData d1 = new ComboboxData("1","选项1");
+		ComboboxData d2 = new ComboboxData("2","选项2");
+		ComboboxData d3 = new ComboboxData("3","选项3");
+		ComboboxData d4 = new ComboboxData("4","选项4");
+		ComboboxData d5 = new ComboboxData("5","选项5");
+		
+		list.add(d1);
+		list.add(d2);
+		list.add(d3);
+		list.add(d4);
+		list.add(d5);
+		
+		return list;
+	}
+	
 	@SuppressWarnings("unused")
 	@RequestMapping
 	public @ResponseBody String upload(@RequestParam("file") CommonsMultipartFile file) throws Exception {
