@@ -8,12 +8,19 @@ $(function() {
 			idField : 'id',
 			pageSize : 10,
 			width : '99.9%',
-			height : '95%',
+			height : '80%',
 			checkbox : true,
 		},
 		fields : [ {
 			display : '主键',//display或者title都行
-			name : 'id'		//name或者field都行
+			name : 'id',		//name或者field都行
+			comboboxName:"comId",
+			type : 'select',
+			options:{
+				valueFieldID:'text',
+				url:'select.do'
+			}
+				
 		}, {
 			title : '名字',
 			field : 'username'
@@ -25,7 +32,20 @@ $(function() {
 			title : '英文名',
 			field : 'enName',
 			updateable:false
-		} ,{
+		} ,
+		{
+			title : 'combobox',
+			field : 'comboTest',
+			comboboxName:"CategoryName",
+			type : 'select',
+			gridShow : false,
+			options:{
+				valueFieldID:'text',
+				initValue:'1',
+				url:'select.do'
+			}
+		},
+		{
 			title : '测试上传',
 			field : 'testUpload',
 			type:'file',
@@ -33,11 +53,11 @@ $(function() {
 				uploadBrowseId:'upload_button',
 				uploadSubmitId:'submit_button',
 				action:'upload.do',
-				autoSubmit:false,
+				autoSubmit:true,
 				name:'file',
-//				onChange:function(file, extension){
-//					console.log(extension.toLowerCase());
-//				},
+				onChange:function(file, extension){
+					console.log(extension.toLowerCase());
+				},
 				onComplete:function(data,ex){
 					console.log(ex);
 					console.log(data);
@@ -47,7 +67,8 @@ $(function() {
 				}
 				
 			}
-		} ],
+		} 
+	],
 		search:{
 			field:[
 			       {display:'用户名',name:'username1', newline: false,type:'text'},
@@ -64,7 +85,7 @@ $(function() {
 	}
 	$("#maingrid").crud(options);
 	var grid = $("#maingrid").crud("getDatagrid");
-
+	
 });
 
 function addItem(item){
