@@ -225,6 +225,9 @@
             	}
             	$this.plugin.getHandle().selectHandle();
             },
+            onReload:function(){
+            	$this.plugin.getHandle().initGrid();
+            },
             toolbar:{items:buttons}
 		});
 		
