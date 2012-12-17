@@ -7,7 +7,6 @@ $(function() {
 			dataUrl : 'grid.do',
 			idField : 'id',
 			pageSize : 10,
-			height : '80%',
 			checkbox : true,
 		},
 		fields : [ {
