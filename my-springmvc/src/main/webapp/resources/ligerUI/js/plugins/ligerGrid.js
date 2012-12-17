@@ -31,7 +31,7 @@
         usePager: true,                         //是否分页
         page: 1,                                //默认当前页 
         pageSize: 10,                           //每页默认的结果数
-        pageSizeOptions: [10, 20, 30, 40, 50],  //可选择设定的每页结果数
+        pageSizeOptions: [10, 15 ,20, 30, 40, 50],  //可选择设定的每页结果数
         parms: [],                         //提交到服务器的参数
         columns: [],                          //数据源
         minColToggle: 1,                        //最小显示的列
@@ -119,14 +119,14 @@
         rowDraggingRender: null,
         autoCheckChildren: true,                  //是否自动选中子节点
         onRowDragDrop: null,                    //行拖拽事件
-        rowHeight: 22,                           //行默认的高度
-        headerRowHeight: 23,                    //表头行的高度
+        rowHeight: 24,                           //行默认的高度
+        headerRowHeight: 25,                    //表头行的高度
         toolbar: null,                           //工具条,参数同 ligerToolbar的
         headerImg: null                        //表格头部图标
     };
     $.ligerDefaults.GridString = {
         errorMessage: '发生错误',
-        pageStatMessage: '显示从{from}到{to}，总 {total} 条 。每页显示：{pagesize}',
+        pageStatMessage: '显示从{from}到{to}，总 {total} 条 。',
         pageTextMessage: 'Page',
         loadingMessage: '加载中...',
         findTextMessage: '查找',
@@ -2902,7 +2902,7 @@
                     {
                         gridhtmlarr.push(' class="l-grid-row-cell l-grid-row-cell-rownumbers" style="width:' + this.width + 'px"><div class="l-grid-row-cell-inner"');
                         if (p.fixedCellHeight)
-                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;" ');
+                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;margin-top: '+(p.rowHeight-16)/2 +'px;" ');
                         gridhtmlarr.push('>' + (parseInt(item['__index']) + 1) + '</div></td>');
                         return;
                     }
@@ -2911,7 +2911,7 @@
                     {
                         gridhtmlarr.push(' class="l-grid-row-cell l-grid-row-cell-checkbox" style="width:' + this.width + 'px"><div class="l-grid-row-cell-inner"');
                         if (p.fixedCellHeight)
-                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;" ');
+                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;margin-top: '+(p.rowHeight-16)/2 +'px;" ');
                         gridhtmlarr.push('><span class="l-grid-row-cell-btn-checkbox"></span></div></td>');
                         return;
                     }
@@ -2920,7 +2920,7 @@
                     {
                         gridhtmlarr.push(' class="l-grid-row-cell l-grid-row-cell-detail" style="width:' + this.width + 'px"><div class="l-grid-row-cell-inner"');
                         if (p.fixedCellHeight)
-                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;" ');
+                            gridhtmlarr.push(' style = "height:' + p.rowHeight + 'px;margin-top: '+(p.rowHeight-16)/2 +'px;" ');
                         gridhtmlarr.push('><span class="l-grid-row-cell-detailbtn"></span></div></td>');
                         return;
                     }
@@ -2954,7 +2954,7 @@
             htmlarr.push('<div class="l-grid-row-cell-inner"');
             //htmlarr.push('<div');
             htmlarr.push(' style = "width:' + parseInt(column._width - 8) + 'px;');
-            if (p.fixedCellHeight) htmlarr.push('height:' + p.rowHeight + 'px;min-height:' + p.rowHeight + 'px; ');
+            if (p.fixedCellHeight) htmlarr.push('height:' + p.rowHeight + 'px;min-height:' + p.rowHeight + 'px;margin-top: '+(p.rowHeight-16)/2 +'px; ');
             if (column.align) htmlarr.push('text-align:' + column.align + ';');
             var content = g._getCellContent(rowdata, column);
             htmlarr.push('">' + content + '</div>');
