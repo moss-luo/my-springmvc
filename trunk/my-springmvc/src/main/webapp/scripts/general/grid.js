@@ -7,7 +7,6 @@ $(function() {
 			dataUrl : 'grid.do',
 			idField : 'id',
 			pageSize : 10,
-			width : '99.9%',
 			height : '80%',
 			checkbox : true,
 		},
@@ -15,6 +14,7 @@ $(function() {
 			display : '主键',//display或者title都行
 			name : 'id',		//name或者field都行
 			comboboxName:"comId",
+			gridWidth:'25%',
 			type : 'select',
 			options:{
 				valueFieldID:'text',
@@ -23,13 +23,16 @@ $(function() {
 				
 		}, {
 			title : '名字',
+			gridWidth:'25%',
 			field : 'username'
 			
 		}, {
 			title : '年龄',
+			gridWidth:'23%',
 			field : 'age',
 		}, {
 			title : '英文名',
+			gridWidth:'25%',
 			field : 'enName',
 			updateable:false
 		} ,
@@ -48,6 +51,7 @@ $(function() {
 		{
 			title : '测试上传',
 			field : 'testUpload',
+			gridShow : false,
 			type:'file',
 			upload:{
 				uploadBrowseId:'upload_button',
