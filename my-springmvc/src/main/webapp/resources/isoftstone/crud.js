@@ -124,7 +124,7 @@
 			var formData = $([]);
 			formData = $.map(options.fields,function(dom,i){
 				dom = $.extend({addShow:true,updateable:true,display:dom.title,
-								name:dom.field,width:dom.dialogWidth},dom);
+								name:dom.field,width:dom.fieldWidth},dom);
 				if(dom.addShow)return dom;
 			});
 			

@@ -38,7 +38,7 @@ $(function() {
 			title : '描述信息',
 			field : 'descrition',
 			gridShow:false,
-			type:'textarea'
+			type:'textarea',
 		},{
 			title : 'combobox',
 			field : 'comboTest',
