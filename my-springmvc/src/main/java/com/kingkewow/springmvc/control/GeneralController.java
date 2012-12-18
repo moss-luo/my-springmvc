@@ -33,7 +33,6 @@ public class GeneralController {
 	@RequestMapping
 	public @ResponseBody
 	Map<String, Object> grid(@RequestParam(value="username", required=false) final String username,ParamModel pager) {
-		System.out.println(username);
 		UserModel user = new UserModel("1", "测试名称1", 23, "TEST");
 		UserModel user2 = new UserModel("2", "测试名称2", 25, "TEST2");
 		UserModel user3 = new UserModel("3", "测试名称3", 23, "TEST3");
@@ -57,7 +56,7 @@ public class GeneralController {
 		list.add(user10);
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("total", 4);
+		map.put("total", 10);
 		map.put("rows", list);
 		return map;
 	}
