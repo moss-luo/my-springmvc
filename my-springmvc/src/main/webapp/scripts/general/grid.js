@@ -85,8 +85,8 @@ $(function() {
 	 	},
 	 	dialog : {
 			labelWidth : 80,
-			height : 300,
-			width : 400,
+			height : 400,
+			width : 350,
 		},
 		
 	}
