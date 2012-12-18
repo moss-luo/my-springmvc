@@ -34,8 +34,12 @@ $(function() {
 			gridWidth:'25%',
 			field : 'enName',
 			updateable:false
-		} ,
-		{
+		} , {
+			title : '描述信息',
+			field : 'descrition',
+			gridShow:false,
+			type:'textarea'
+		},{
 			title : 'combobox',
 			field : 'comboTest',
 			comboboxName:"CategoryName",
@@ -70,7 +74,7 @@ $(function() {
 				}
 				
 			}
-		} 
+		}
 	],
 		search:{
 			field:[
