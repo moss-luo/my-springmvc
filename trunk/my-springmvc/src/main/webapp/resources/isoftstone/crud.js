@@ -29,8 +29,15 @@
 	        checkbox: false,                        //是否显示复选框
 	        singleSelect:false,						//是否单选模式 
 	        
-	        toolbars: null,                          		//工具条,参数同 ligerToolbar的
-	        validateDelete:function(){return true;}			 //删除校验，默认校验通过
+	        pageParmName: 'page',               	//页索引参数名，(提交给服务器)
+	        pagesizeParmName: 'rows',        		//页记录数参数名，(提交给服务器)
+	        sortnameParmName: 'sort',        		//页排序列名(提交给服务器)
+	        sortorderParmName: 'order',     		//页排序方向(提交给服务器)
+	        root: 'rows',                       	//数据源字段名
+	        record: 'total',                    	//数据源记录数字段名
+	        
+	        toolbars: null,                          //工具条,参数同 ligerToolbar的
+	        validateDelete:function(){return true;}	 //删除校验，默认校验通过
 	     	},
 		search:{
 			inputWidth: 170, 
@@ -193,12 +200,12 @@
             render:options.grid.render,
             align:options.grid.align,
             
-            pageParmName: 'page',               //页索引参数名，(提交给服务器)
-	        pagesizeParmName: 'rows',        	//页记录数参数名，(提交给服务器)
-	        sortnameParmName: 'sort',        	//页排序列名(提交给服务器)
-	        sortorderParmName: 'order',     	//页排序方向(提交给服务器)
-	        root: 'rows',                       //数据源字段名
-	        record: 'total',                    //数据源记录数字段名
+            pageParmName: options.grid.pageParmName,               		//页索引参数名，(提交给服务器)
+	        pagesizeParmName: options.grid.pagesizeParmName,        	//页记录数参数名，(提交给服务器)
+	        sortnameParmName: options.grid.sortnameParmName,        	//页排序列名(提交给服务器)
+	        sortorderParmName: options.grid.sortorderParmName,     		//页排序方向(提交给服务器)
+	        root: options.grid.root,                       				//数据源字段名
+	        record: options.grid.record,                    			//数据源记录数字段名
 	        
 	        onCheckRow: function(checked, rowdata, rowindex) {
 	        	if(options.grid.singleSelect){
