@@ -5312,7 +5312,7 @@
             }
             if (field.textarea || field.type == "textarea")
             {
-                out.push('<textarea ');
+                out.push('<textarea style="width:'+(width-2)+'px;"');
             }
             else if (field.type == "checkbox")
             {
