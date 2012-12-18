@@ -34,24 +34,12 @@ $(function() {
 			gridWidth:'25%',
 			field : 'enName',
 			updateable:false
-		} , {
+		}, {
 			title : '描述信息',
 			field : 'descrition',
 			gridShow:false,
 			type:'textarea',
-		},{
-			title : 'combobox',
-			field : 'comboTest',
-			comboboxName:"CategoryName",
-			type : 'select',
-			gridShow : false,
-			options:{
-				valueFieldID:'text',
-				initValue:'1',
-				url:'select.do'
-			}
-		},
-		{
+		}, {
 			title : '测试上传',
 			field : 'testUpload',
 			gridShow : false,
@@ -85,7 +73,7 @@ $(function() {
 	 	},
 	 	dialog : {
 			labelWidth : 80,
-			height : 400,
+			height : 350,
 			width : 350,
 		},
 		
