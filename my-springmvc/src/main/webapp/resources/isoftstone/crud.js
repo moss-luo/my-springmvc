@@ -294,7 +294,12 @@
 						data = $.map(options.search.field,function(n,i){
 							var temp = {name:null,value:null};
 							temp.name = n.name;
-							temp.value = $("[name='"+searchField[i].name+"']").val();
+							if(n.type=="select"){
+								if(n.options.valueFieldID)temp.value = $("[name='"+n.options.valueFieldID+"']").val();
+								else temp.value = $("[name='"+searchField[i].name+"_val']").val();
+							}else{
+								temp.value = $("[name='"+searchField[i].name+"']").val();
+							}
 							return temp;
 						});
 						var gridManager = selector.ligerGetGridManager(); 
@@ -460,9 +465,19 @@
 				url = options.saveUrl;
 				$.map(options.globalFormData,function(n,i){
 						if(n.strutsFieldName){
-							return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+							if(n.type=="select"){
+								if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
+								else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
+							}else{
+								return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+							}
 						}else{
-							return params[n.name]=$("[name='"+n.name+"']").val();
+							if(n.type=="select"){
+								if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
+								else return params[n.name]=$("[name='"+n.name+"_val']").val();
+							}else{
+								return params[n.name]=$("[name='"+n.name+"']").val();
+							}
 						}
 					}).join(',');
 			}else{
@@ -475,9 +490,19 @@
 				$.map(options.globalFormData,function(n,i){
 						if(n.updateable){
 							if(n.strutsFieldName){
-								return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+								if(n.type=="select"){
+									if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
+									else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
+								}else{
+									return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
+								}
 							}else{
-								return params[n.name]=$("[name='"+n.name+"']").val();
+								if(n.type=="select"){
+									if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
+									else return params[n.name]=$("[name='"+n.name+"_val']").val();
+								}else{
+									return params[n.name]=$("[name='"+n.name+"']").val();
+								}
 							}
 						}
 						return ;
