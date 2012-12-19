@@ -425,14 +425,17 @@
 	 * 创建dialog
 	 */
 	Handle.prototype.createDialog=function(title){
-		if(options._dialog==null){
+		
+		if(options._dialog!=null && options._dialog.options.title==title){
+			options._dialog.show();
+		}else{
 			options._dialog = $.ligerDialog.open({
 				target:$("#liger_editform"),
 				title: title, 
 				name:'editItemFrame',
 				width: options.dialog.width, 
 				height: options.dialog.height,
-				buttons:[{text:'保存' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }},
+				buttons:[{text:'确定' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }},
 				         {text:'取消' , onclick: function (i, d) { $("input").ligerHideTip(); d.hide();$(".errorInput").removeClass('errorInput'); }}]
 			});
 			
@@ -445,10 +448,6 @@
 		   
 		   $(".l-dialog-title").bind('mousedown',function()   //移动dialog时,隐藏tip
 	                {$("input").ligerHideTip();});
-		   
-		   
-		}else{
-			options._dialog.show();
 		}
 	}
 	
