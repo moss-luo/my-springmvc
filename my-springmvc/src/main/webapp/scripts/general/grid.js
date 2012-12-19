@@ -12,11 +12,11 @@ $(function() {
 		fields : [ {
 			display : '主键',//display或者title都行
 			name : 'id',		//name或者field都行
-			comboboxName:"comId",
 			gridWidth:'25%',
 			type : 'select',
 			options:{
-				valueFieldID:'text',
+				textField:"text",
+				valueField:"id",
 				url:'select.do'
 			}
 				
@@ -66,7 +66,11 @@ $(function() {
 	],
 		search:{
 			field:[
-			       {display:'用户名',name:'username1', newline: false,type:'text'},
+			       {display:'用户名',name:'username', newline: false,type:'select',options:{
+			    	   	textField:'text',
+			    	   	valueFieldID :'id',
+						url:'select.do'
+					}},
 			       {display: "日期 ", name: "createdate", newline: false, type: "date"},
 			],
 			buttons:[{text:'测试',id:'test',handle:function(){alert("test");}}],
