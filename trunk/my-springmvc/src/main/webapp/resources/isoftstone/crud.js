@@ -5,10 +5,9 @@
 
 (function($){
 	var options={
-		saveUrl:"",//新增url
-		updateUrl:"",//修改url
-		removeUrl:"",//删除url
-		uploadUrl:"",//上传url	
+		saveUrl:"",									//新增url
+		updateUrl:"",								//修改url
+		removeUrl:"",								//删除url
 		
 		grid:{
 			addable:true,							//是否可新增
