@@ -239,7 +239,7 @@
 		handleFileUpload:function(fields,element){
 			var field;
 			$.each(fields,function(i,dom){
-				if(element.id = dom.name)field = dom;
+				if(element[0].id == dom.name)field = dom;
 			});
 			var uploadBrowseId = "liger_uploadBrowse_"+field.name;
 			var uploadSubmitId = "liger_uploadSubmit_"+field.name;
