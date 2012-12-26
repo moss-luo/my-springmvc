@@ -1,10 +1,18 @@
 package com.kingkewow.springmvc.control;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +40,9 @@ public class GeneralController {
 
 	@RequestMapping
 	public @ResponseBody
-	Map<String, Object> grid(@RequestParam(value="username", required=false) final String username,ParamModel pager) {
+	Map<String, Object> grid(
+			@RequestParam(value = "username", required = false) final String username,
+			ParamModel pager) {
 		UserModel user = new UserModel("1", "测试名称1", 23, "TEST");
 		UserModel user2 = new UserModel("2", "测试名称2", 25, "TEST2");
 		UserModel user3 = new UserModel("3", "测试名称3", 23, "TEST3");
@@ -62,50 +72,75 @@ public class GeneralController {
 	}
 
 	@RequestMapping
-	public @ResponseBody OperationPrompt delete(@RequestParam("ids") String ids) {
-		return new OperationPrompt("删除操作成功！",true);
+	public @ResponseBody
+	OperationPrompt delete(@RequestParam("ids") String ids) {
+		return new OperationPrompt("删除操作成功！", true);
 	}
-	
+
 	@RequestMapping
-	public @ResponseBody OperationPrompt add(UserModel user) {
+	public @ResponseBody
+	OperationPrompt add(UserModel user) {
 		System.out.println(user.getUsername());
-		return new OperationPrompt("新增操作成功！",true);
+		return new OperationPrompt("新增操作成功！", true);
 	}
-	
+
 	@RequestMapping
-	public @ResponseBody OperationPrompt modify(UserModel user) {
+	public @ResponseBody
+	OperationPrompt modify(UserModel user) {
 		System.out.println(user.getUsername());
-		return new OperationPrompt("修改操作成功！",true);
+		return new OperationPrompt("修改操作成功！", true);
 	}
-	
+
 	@RequestMapping
-	public @ResponseBody List<ComboboxData> select(){
+	public @ResponseBody
+	List<ComboboxData> select() {
 		List<ComboboxData> list = new ArrayList<ComboboxData>();
-		ComboboxData d1 = new ComboboxData("1","选项1");
-		ComboboxData d2 = new ComboboxData("2","选项2");
-		ComboboxData d3 = new ComboboxData("3","选项3");
-		ComboboxData d4 = new ComboboxData("4","选项4");
-		ComboboxData d5 = new ComboboxData("5","选项5");
-		
+		ComboboxData d1 = new ComboboxData("1", "选项1");
+		ComboboxData d2 = new ComboboxData("2", "选项2");
+		ComboboxData d3 = new ComboboxData("3", "选项3");
+		ComboboxData d4 = new ComboboxData("4", "选项4");
+		ComboboxData d5 = new ComboboxData("5", "选项5");
+
 		list.add(d1);
 		list.add(d2);
 		list.add(d3);
 		list.add(d4);
 		list.add(d5);
-		
+
 		return list;
 	}
-	
-	@SuppressWarnings("unused")
+
 	@RequestMapping
-	public @ResponseBody String upload(@RequestParam("file") CommonsMultipartFile file) throws Exception {
-		if (!file.isEmpty()) {
-			byte[] bytes = file.getBytes();
-			// store the bytes somewhere
-			return "success";
-		} else {
-			return "error";
+	public @ResponseBody
+	String upload(HttpServletRequest request,@RequestParam("file") CommonsMultipartFile file) throws Exception {
+		try{
+			if (!file.isEmpty()) {
+				String uploadPath = "/home/ams/temp";
+				File uploadFile = new File(uploadPath);
+				if(!uploadFile.exists())uploadFile.mkdirs();
+				System.out.println(request);
+				boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+				if (isMultipart) {
+					FileItem item = file.getFileItem();
+					String fileName = item.getName();
+					if (fileName != null) {
+						File fullFile = new File(item.getName());
+						File savedFile = new File(uploadPath, fullFile.getName());
+						item.write(savedFile);
+					}
+				}
+
+				ShellExec.exec("");
+				
+				return "success";
+			} else {
+				return "error";
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
+		
 
 	}
 }
