@@ -8,17 +8,17 @@
 */
 (function ($)
 {
-    $.fn.ligerTextBox = function ()
+    $.fn.ligerFile = function ()
     {
-        return $.ligerui.run.call(this, "ligerTextBox", arguments);
+        return $.ligerui.run.call(this, "ligerFile", arguments);
     };
 
-    $.fn.ligerGetTextBoxManager = function ()
+    $.fn.ligerGetFileManager = function ()
     {
-        return $.ligerui.run.call(this, "ligerGetTextBoxManager", arguments);
+        return $.ligerui.run.call(this, "ligerGetFileManager", arguments);
     };
 
-    $.ligerDefaults.TextBox = {
+    $.ligerDefaults.File = {
         onChangeValue: null,
         width: null,
         disabled: false,
@@ -29,24 +29,25 @@
     };
 
 
-    $.ligerui.controls.TextBox = function (element, options)
+    $.ligerui.controls.File = function (element, options)
     {
-        $.ligerui.controls.TextBox.base.constructor.call(this, element, options);
+        $.ligerui.controls.File.base.constructor.call(this, element, options);
     };
 
-    $.ligerui.controls.TextBox.ligerExtend($.ligerui.controls.Input, {
+    $.ligerui.controls.File.ligerExtend($.ligerui.controls.Input, {
         __getType: function ()
         {
-            return 'TextBox'
+            return 'File'
         },
         __idPrev: function ()
         {
-            return 'TextBox';
+            return 'File';
         },
         _init: function ()
         {
-            $.ligerui.controls.TextBox.base._init.call(this);
+            $.ligerui.controls.File.base._init.call(this);
             var g = this, p = this.options;
+			
             if (!p.width)
             {
                 p.width = $(g.element).width();
@@ -62,12 +63,16 @@
             g.inputText = $(this.element);
             //外层
             g.wrapper = g.inputText.wrap('<div class="l-text"></div>').parent();
+            
+			g.inputText.attr("disabled","disabled");
             g.wrapper.append('<div class="l-text-l"></div><div class="l-text-r"></div>');
+
             if (!g.inputText.hasClass("l-text-field"))
                 g.inputText.addClass("l-text-field");
             this._setEvent();
             g.set(p);
             g.checkValue();
+            g.handleFileUpload(p.fields,g.inputText)
         },
         _getValue: function ()
         {
@@ -228,6 +233,55 @@
                 g.inputText.removeClass("l-text-field-null");
             }
             g.checkValue();
-        }
+        },
+        
+        //处理上传
+		handleFileUpload:function(fields,element){
+			var field;
+			$.each(fields,function(i,dom){
+				if(element[0].id == dom.name)field = dom;
+			});
+			var uploadBrowseId = "liger_uploadBrowse_"+field.name;
+			var uploadSubmitId = "liger_uploadSubmit_"+field.name;
+			if(field.upload){
+				if(field.upload.uploadBrowseId)uploadBrowseId=field.upload.uploadBrowseId;
+				if(field.upload.uploadSubmitId)uploadSubmitId=field.upload.uploadSubmitId;
+			}
+			var setting = field.upload;
+			var liger_upload = new AjaxUpload("#"+uploadBrowseId,{
+				 action:setting.action,  
+				 autoSubmit:setting.autoSubmit,  
+				 name:setting.name,  
+				 onChange:function(file, extension){
+					 setting.onChange?setting.onChange.call(this,file,extension):element.val(file);
+				 },
+				 onComplete:function(data,ex){
+					 if(setting.onComplete){
+						 setting.onComplete.call(this,data,ex); 
+					 }else{
+						 var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200,content: '上传成功!' });
+							tip.show();
+							setTimeout(function (){tip.hide();},1500);
+					 }
+				 }
+			});
+			
+			if(!field.upload.autoSubmit){
+				$("#"+uploadSubmitId).click(function(){
+					if(setting.beforeSubmit){
+						setting.beforeSubmit.call(this);
+					}
+					
+					if(element.val()!="" && element.val()!="undefined"&& element.val()!=null){
+						liger_upload.submit();
+					}else{
+						var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200,content: '请浏览您要上传的文件!' });
+				  	    tip.show();
+				  	    setTimeout(function (){tip.hide();},1500);
+					}
+				});
+			}
+			
+		}
     });
 })(jQuery);
