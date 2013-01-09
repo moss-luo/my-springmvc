@@ -19,19 +19,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- spring dependency begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>3.0.5.RELEASE</version>
+			<version>${springVersion}</version>
+			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- spring dependency begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -128,20 +122,20 @@
 		</dependency>
 		<!-- mybatis dependency end -->
 		<!-- database connector begin -->
+		<!-- 
 		 <dependency>
 			<groupId>oracle</groupId>
 			<artifactId>oracle-ojdbc</artifactId>
 			<version>6</version>
 		</dependency>
-		<!-- 
 		若公共仓库无oracle驱动包，请执行DOS命令
 		mvn install:install-file -Dfile={ORACLE_HOME}/oracle-ojdbc-6.jar -Dpackaging=jar\ -DgroupId=oracle -DartifactId=oracle-ojdbc -Dversion=6 
 		{ORACLE_HOME}为你的Oracle安装路径
 		 -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysqlConnectorVersion}</version>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.10</version>
 		</dependency>
 		<!-- database connector end -->
 
