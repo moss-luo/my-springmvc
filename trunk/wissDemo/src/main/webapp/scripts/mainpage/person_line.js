@@ -7,7 +7,7 @@ AmCharts.ready(function () {
 
     // SERIAL CHART    
     chart = new AmCharts.AmSerialChart();
-    chart.pathToImages = "../../resources/images/amcharts/";
+    chart.pathToImages = "../resources/images/amcharts/";
     chart.panEventsEnabled = true;
     chart.zoomOutButton = {
         backgroundColor: "#000000",
