@@ -3,15 +3,12 @@ package com.kingkewow.springmvc.control;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +25,9 @@ import com.kingkewow.springmvc.model.UserModel;
 @Controller
 @RequestMapping
 public class GeneralController {
-
+	
 	@RequestMapping
-	public @ResponseBody
-	Model execute(Model model) {
+	public @ResponseBody Model execute(Model model) {
 		UserModel user = new UserModel("1", "fangjing", 23, "JANE");
 		model.addAttribute("jane", user);
 		System.out.println("index.jsp");
@@ -40,9 +36,9 @@ public class GeneralController {
 
 	@RequestMapping
 	public @ResponseBody
-	Map<String, Object> grid(
-			@RequestParam(value = "username", required = false) final String username,
-			ParamModel pager) {
+	Map<String, Object> grid(@RequestParam(value = "username", required = false) 
+			final String username,ParamModel pager) {
+		
 		UserModel user = new UserModel("1", "测试名称1", 23, "TEST");
 		UserModel user2 = new UserModel("2", "测试名称2", 25, "TEST2");
 		UserModel user3 = new UserModel("3", "测试名称3", 23, "TEST3");
@@ -130,8 +126,6 @@ public class GeneralController {
 					}
 				}
 
-				ShellExec.exec("");
-				
 				return "success";
 			} else {
 				return "error";
