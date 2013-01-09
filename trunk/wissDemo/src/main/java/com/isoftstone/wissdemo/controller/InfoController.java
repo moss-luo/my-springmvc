@@ -1,4 +1,4 @@
-package com.isoftstone.wissdemo.controller.page;
+package com.isoftstone.wissdemo.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.isoftstone.wissdemo.vo.User;
 
 @Controller
-@RequestMapping("/mainpage")
+@RequestMapping
 public class InfoController {
 	
-	@RequestMapping("info")
-	
-	public @ResponseBody Map<String,Object> info(){
+	@RequestMapping
+	public @ResponseBody Map<String,Object> getInfo(){
 
 		User u1 = new User(123456,"张三",1001016,"2012.09.01 09:05","出");
 		User u2 = new User(252589,"张四",1006589,"2012.09.01 09:05","进");
