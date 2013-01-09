@@ -1,4 +1,4 @@
-package com.isoftstone.wissdemo.controller.persons;
+package com.isoftstone.wissdemo.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import com.isoftstone.wissdemo.vo.User;
 
 @Controller
 @RequestMapping
-public class PersonController {
+public class UserController {
 
 	@RequestMapping
 	public @ResponseBody Map<String,Object> query(){
