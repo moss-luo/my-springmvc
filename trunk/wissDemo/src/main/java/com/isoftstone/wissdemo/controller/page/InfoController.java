@@ -1,4 +1,4 @@
-package com.isoftstone.wissdemo.controller.mainpage;
+package com.isoftstone.wissdemo.controller.page;
 
 import java.util.ArrayList;
 import java.util.HashMap;
