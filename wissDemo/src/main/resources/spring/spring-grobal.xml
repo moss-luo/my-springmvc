@@ -36,7 +36,7 @@
 
 	<!-- enable component scanning (beware that this does not enable mapper 
 		scanning!) -->
-	<context:component-scan base-package="com.isoftstone.wissdemo" />
+	<context:component-scan base-package="com.isoftstone.wissdemo.controller" />
 
 	<!-- enable autowire -->
 	<context:annotation-config />

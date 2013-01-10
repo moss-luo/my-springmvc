@@ -11,7 +11,7 @@ $(function ()
             { display: '使用时间', name: 'address',width:250},
             { display: '使用类型（出/进）', name: 'company',width:250}
                  ], 
-        url:'info.do',  
+        url:'../info/getInfo.do',  
         pageSize:15 ,
         width : '100%',
         rownumbers:true
