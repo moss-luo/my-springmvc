@@ -21,6 +21,10 @@
 /** Selectors **/
 
 /* Reset */
+body {
+	background: url("images/bg_page.jpg") repeat-x scroll 0 0 #FFFFFF;
+    margin: 0 auto;
+}
 #menu * {
   margin: 0px;
   padding: 0px;
