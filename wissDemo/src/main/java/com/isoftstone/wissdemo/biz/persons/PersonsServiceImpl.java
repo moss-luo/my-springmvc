@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isoftstone.wissdemo.dao.CommoDao;
-import com.isoftstone.wissdemo.vo.persons;
+import com.isoftstone.wissdemo.vo.Person;
 
 @Service
 public class PersonsServiceImpl  implements PersonsService{
@@ -17,8 +17,8 @@ public class PersonsServiceImpl  implements PersonsService{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<persons> list(Map<String, Object> params) throws Exception {
-		return (List<persons>) dbDao.selectList("com.isoftstone.wissdemo.dao.PersonsMapper.list", params);
+	public List<Person> list(Map<String, Object> params) throws Exception {
+		return (List<Person>) dbDao.selectList("com.isoftstone.wissdemo.dao.PersonsMapper.list", params);
 	}
 	
 	@Override
