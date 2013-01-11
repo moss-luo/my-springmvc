@@ -1,33 +1,93 @@
-/*全局*/
-body{width:100%;
-    margin:0 auto;
-    padding:0;
-    font:80%/1.7em "Trebuchet Ms",HElvetica ,Verdana,sans-serif;
-    color:#555;}
-*{
-    margin:0;
-    padding:0;}
+    body,html{height:100%;}
+    body{ padding:0px; margin:0;   overflow:hidden;}  
+    .l-link2{text-decoration:underline; color:white; margin-left:2px;margin-right:2px;}
+    .l-layout-top{background:#102A49; color:White;}
+    .l-layout-bottom{ background:#E5EDEF; text-align:center;}
    
-/*头部*/
-#header{
-    height:110px;
-   }
-   
-/*中部区域*/
-#container {
-    height:620px;
-    }
+    .l-link{ display:block; line-height:22px; height:22px; padding-left:16px;border:1px solid white; margin:4px;color:#333;} 
+    .l-link-over{ background:#FFEEAC; border:1px solid #DB9F00;} 
+    .l-winbar{ background:#2B5A76; height:30px; position:absolute; left:0px; bottom:0px; width:100%; z-index:99999;}
+    .space{ color:#E7E7E7;}
+    /*  */ 
+    .l-topmenu{ margin:0; padding:0; height:31px; line-height:31px; background:url('ligerui/img/top.jpg') repeat-x bottom;  position:relative; border-top:1px solid #1D438B;  }
+    .l-topmenu-logo{ color:#E7E7E7; padding-left:35px; line-height:26px;background:url('ligerui/img/topicon.gif') no-repeat 10px 5px;}
+    .l-topmenu-welcome{  position:absolute; height:24px; line-height:24px;  right:30px; top:2px;color:#070A0C;}
+    .l-topmenu-welcome a{ color:#E7E7E7; text-decoration:underline} 
+#top {
+	background-color: #d0def9;
+	height: 68px;
+	background-image: url(../image/bg_top.gif);
+	background-repeat: repeat-x;
+}
 
-/*菜单栏*/
-.menuBox {
-    float:left;
-    width:200px;
-    height:620px;
-     }
+/*top*/
+#header {
+	height:105px;
+	background-image: url(../image/top.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+#logo{
+	width: 245px;
+	float: left;
+	height: 55px;
+	padding-top: 8px;
+	padding-left: 45px;
+}
+#header #yyxt {
+	height: 43px;
+	width: 183px;
+	float: left;
+	padding-top: 23px;
+	padding-left: 10px;
+	
+}
+#header #tuichu {
+	height: 39px;
+	float: right;
+	color: #FFFFFF;
+	height: 24px;
+	width: 51px;
+	border:0;
+	margin-top: 6px;
+	margin-right: 20px;
+}
+#top #header #top_right {
+	height: 66px;
+	margin-left: 346px;
+}
+#top #header #top_right #top_menu {
+	height: 39px;
+}
 
-/*内容区域*/
-.mainBox {
-    float:right;
-    width:1220px;
-    height:620px;
-   }
+#top #header #bg_nav {
+	background-image: url(../image/nav.gif);
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+	clear: right;
+}
+#top #header #bg_nav #nav {
+	background-image: url(../image/bg_nav.gif);
+	height: 27px;
+	margin-left: 44px;
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	line-height: 27px;
+	color: #14427d;
+	font-size: 13px;
+	font-weight: bold;
+}
+#top #header #bg_nav #nav #welcome {
+	padding: 0px;
+	float: left;
+	margin: 0px;
+}
+#top #header #bg_nav #nav #time {
+	background-image: url(../image/icon_watch.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	float: right;
+	padding-left: 30px;
+	margin-right: 30px;
+}
