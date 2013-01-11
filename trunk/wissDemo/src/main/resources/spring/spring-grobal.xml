@@ -34,8 +34,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- enable component scanning (beware that this does not enable mapper 
-		scanning!) -->
+	<!-- enable component scanning (beware that this does not enable mapper scanning!) -->
 	<context:component-scan base-package="com.isoftstone.wissdemo.controller" />
 
 	<!-- enable autowire -->
@@ -43,8 +42,7 @@
 
 	<!-- enable transaction demarcation with annotations -->
 	<tx:annotation-driven />
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">  
-	</bean>
+
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
