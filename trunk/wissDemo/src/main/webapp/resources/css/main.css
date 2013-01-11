@@ -16,14 +16,14 @@
 #top {
 	background-color: #d0def9;
 	height: 68px;
-	background-image: url(../image/bg_top.gif);
+	background-image: url(../images/bg_top.gif);
 	background-repeat: repeat-x;
 }
 
 /*top*/
 #header {
 	height:105px;
-	background-image: url(../image/top.gif);
+	background-image: url(../images/top.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
