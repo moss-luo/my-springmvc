@@ -12,4 +12,24 @@ public class DbDaoImpl extends SqlSessionDaoSupport implements CommoDao {
 		return this.getSqlSession().selectList(mapper, param);
 	}
 
+	@Override
+	public int selectOne(String mapper, Object param) throws Exception {
+		return (Integer) this.getSqlSession().selectOne(mapper, param);
+	}
+
+	@Override
+	public int update(String mapper, Object param) throws Exception {
+		return this.getSqlSession().update(mapper, param);
+	}
+
+	@Override
+	public int insert(String mapper, Object param) throws Exception {
+		return this.getSqlSession().insert(mapper, param);
+	}
+
+	@Override
+	public int delete(String mapper, Object param) throws Exception {
+		return 0;
+	}
+
 }

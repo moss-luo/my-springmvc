@@ -20,7 +20,7 @@
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
      
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
 	    <property name="url" value="jdbc:hsqldb:mem:wissDemo" />
 	    <property name="username" value="sa" />
@@ -28,23 +28,14 @@
 	</bean>
 	
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" /> 
-	<!-- transaction manager, use JtaTransactionManager for global tx -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
 
 	<!-- enable component scanning (beware that this does not enable mapper scanning!) -->
-	<context:component-scan base-package="com.isoftstone.wissdemo.controller" />
+	<context:component-scan base-package="com.isoftstone.wissdemo" />
 
 	<!-- enable autowire -->
 	<context:annotation-config />
 
-	<!-- enable transaction demarcation with annotations -->
-	<tx:annotation-driven />
-
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
 				<ref bean="mappingJacksonHttpMessageConverter" /><!-- json转换器 -->
@@ -54,6 +45,12 @@
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 
+	<!-- transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- enable transaction demarcation with annotations -->
+	<tx:annotation-driven />
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="list*,query*,select*,get*" read-only="true" />
@@ -62,7 +59,6 @@
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="create*" propagation="REQUIRED" />
 		</tx:attributes>
-
 	</tx:advice>
 
 	<aop:config>
@@ -77,12 +73,6 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations"
 			value="classpath*:com/isoftstone/wissdemo/dao/**/*.xml" />
-	</bean>
-	<!-- spring mvc -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/views/" />
-		<property name="suffix" value=".jsp" />
 	</bean>
 	
 </beans>
