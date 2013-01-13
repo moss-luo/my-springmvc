@@ -19,7 +19,7 @@ public class InitDB {
 
 	private void initData() {
 		for (int i = 0; i < 30; i++) {
-			jdbcTemplate.execute(String.format("insert into PERSONS (NAME, AGE, SEX, PHONE, IDENTITY_CARD_NUM, CURR_ADDRESS, COMPANY_NAME, REMARKS)values('person_%s',27,1,'18612315678','430528198911041254','深圳','isoftstone','初始化_%s')", i, i,i));
+			jdbcTemplate.execute(String.format("insert into PERSONS (NAME, AGE, SEX, PHONE, IDENTITY_CARD_NUM, CURR_ADDRESS, COMPANY_NAME, REMARKS)values('person_%s',%s,1,'18612315678','430528198911041254','深圳','isoftstone','初始化_%s')", i, 19+i,i));
 		}
 	}
 
