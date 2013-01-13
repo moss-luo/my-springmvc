@@ -1,6 +1,6 @@
 package com.isoftstone.wissdemo.controller;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.isoftstone.wissdemo.biz.persons.PersonsService;
+import com.isoftstone.wissdemo.common.queryUtil.QueryExecutor;
+import com.isoftstone.wissdemo.common.queryUtil.QueryTemplate;
+import com.isoftstone.wissdemo.vo.Person;
 
 @Controller
 @RequestMapping
@@ -19,18 +22,21 @@ public class PersonController {
 	private PersonsService personServiceImpl;
 
 	@RequestMapping
-	public @ResponseBody Map<String,Object> query(@RequestParam Map<String,Object> queryParams){
-		Map<String,Object> result = new HashMap<String, Object>();
-		queryParams.put("start", (Integer.parseInt((String) queryParams.get("page"))-1)
-				*(Integer.parseInt((String) queryParams.get("rows"))));
-		System.out.println(queryParams.get("start"));
-		try {
-			result.put("rows", personServiceImpl.list(queryParams));
-			result.put("total", personServiceImpl.total(queryParams));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public @ResponseBody Map<String,Object> query(@RequestParam final Map<String,Object> queryParams) throws Exception{
 		
-		return result;
+		return QueryTemplate.query(queryParams, new QueryExecutor<Person>() {
+
+			@Override
+			public int total(Map<String, Object> params) throws Exception {
+				return personServiceImpl.total(queryParams);
+			}
+
+			@Override
+			public List<Person> list(Map<String, Object> params)throws Exception {
+				return personServiceImpl.list(queryParams);
+			}
+		});
+		
+		 
 	}
 }
