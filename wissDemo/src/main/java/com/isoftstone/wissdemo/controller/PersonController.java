@@ -21,7 +21,8 @@ public class PersonController {
 	@RequestMapping
 	public @ResponseBody Map<String,Object> query(@RequestParam Map<String,Object> queryParams){
 		Map<String,Object> result = new HashMap<String, Object>();
-		queryParams.put("start", (Integer.parseInt((String) queryParams.get("page"))-1)*10);
+		queryParams.put("start", (Integer.parseInt((String) queryParams.get("page"))-1)
+				*(Integer.parseInt((String) queryParams.get("rows"))));
 		System.out.println(queryParams.get("start"));
 		try {
 			result.put("rows", personServiceImpl.list(queryParams));
