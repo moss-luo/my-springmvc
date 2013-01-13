@@ -6,33 +6,47 @@ $(function(){
 		grid:{
 			dataUrl : '../person/query.do',
 			idField : 'id',
-			pageSize : 10,
+			pageSize : 15,
 			checkbox : true,
 		},
 		fields:[{
 			title:"姓名",
 			field:"name",
+			gridWidth:"15%"
 		},{
 			title:"年龄",
-			field:"age"
+			field:"age",
+			gridWidth:"10%"
 		},{
 			title:"性别",
 			field:"sex",
+			gridWidth:"7%",
+			render: function (row){
+				if(row.sex==1)return "男";
+				else return "女";
+			},
 		},{
 			title:"联系电话",
 			field:"phone",
+			gridWidth:"15%"
 		},{
 			title:"住址",
 			field:"curr_address",
-			
+			gridWidth:"15%"
 		},{
 			title:"公司名称",
-			field:"company_name"
+			field:"company_name",
+			gridWidth:"15%"
+		},{
+			title:"备注",
+			field:"remarks",
+			gridWidth:"20%"
 		}],
 		search:{
+			labelWidth:70,
 			field:[
 			       {display:'用户名',name:'name', newline: false},
-			       {display: "公司名称 ", name: "company", newline: false, type: "date"},
+			       {display: "公司名称",name: "company", newline: false},
 			]
 	 	},
 	 	dialog : {
