@@ -3,7 +3,7 @@
 
 <mapper namespace="com.isoftstone.wissdemo.dao.PersonsMapper">
 	<select id="list" parameterType="map" resultType="com.isoftstone.wissdemo.vo.Person">
-		 select * from persons limit #{start},#{pagesize}
+		 select * from persons limit #{start},#{rows}
 	</select>
 	
 	<select id="total" parameterType="map" resultType="int">
