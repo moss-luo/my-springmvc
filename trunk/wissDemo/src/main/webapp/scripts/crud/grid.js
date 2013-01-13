@@ -7,6 +7,7 @@ $(function(){
 			dataUrl : '../person/query.do',
 			idField : 'id',
 			pageSize : 15,
+			pageList: [10, 15, 20, 25, 30],
 			checkbox : true,
 		},
 		fields:[{
