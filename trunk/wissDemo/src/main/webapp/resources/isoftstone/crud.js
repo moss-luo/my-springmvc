@@ -231,11 +231,9 @@
             	}
             	$this.plugin.getHandle().selectHandle();
             },
-            onReload:function(){
-            	$this.plugin.getHandle().initGrid();
-            },
             onAfterShowData:function(){
             	//加载完数据判断复选框是否选中，如是，则取消选中
+            	$this.plugin.getHandle().initGrid();
             	if($(".l-grid-hd-row").hasClass('l-checked')) $(".l-grid-hd-row").removeClass('l-checked');
             },
             toolbar:{items:buttons}
