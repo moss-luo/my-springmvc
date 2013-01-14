@@ -316,7 +316,12 @@
 							dataType:'json',
 							data:{ids:$.map(rows,function(n){return n[options.grid.idField];}).join(',')},
 							success: function(data){
-								$this.plugin.getHandle().tip(data);
+								if(options.deleteSuccess){
+									options.deleteSuccess.call(this,data);
+								}else{
+									$this.plugin.getHandle().tip(data);
+								} 
+								
 							}
 						});
 		            }
@@ -517,7 +522,11 @@
 			   data: params,
 			   success: function(data){
 				   //回调
-				   $this.plugin.getHandle().tip(data);
+				   if(options.saveSuccess){
+					   options.saveSuccess.call(this,data);
+				   }else{
+					   $this.plugin.getHandle().tip(data);
+				   }
 			   }
 			});
 	}

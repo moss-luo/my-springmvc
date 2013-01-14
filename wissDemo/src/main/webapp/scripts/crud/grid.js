@@ -70,7 +70,10 @@ $(function(){
 			labelWidth : 80,
 			height : 300,
 			width : 580,
-		}
+		},
+	 	deleteSuccess:function(data){
+	 		console.log(data);
+	 	}
 	};
 	
 	$("#maingrid").crud(options);
