@@ -161,10 +161,6 @@
             {
                 if (p.disabled) return;
                 this.className = "l-trigger";
-                if (p.hideOnLoseFocus && g.selectBox.is(":visible") && !g.boxToggling && !g.resizing)
-                {
-                    g._toggleSelectBox(true);
-                }
             }).mousedown(function ()
             {
                 if (p.disabled) return;
@@ -192,11 +188,6 @@
             {
                 if (p.disabled) return;
                 g.wrapper.addClass("l-text-focus");
-            }).mouseout(function(){
-            	 if (p.hideOnLoseFocus && g.selectBox.is(":visible") && !g.boxToggling && !g.resizing)
-                 {
-                     g._toggleSelectBox(true);
-                 }
             });
             g.wrapper.hover(function ()
             {
@@ -208,12 +199,8 @@
                 g.wrapper.removeClass("l-text-over");
             });
             g.resizing = false;
-            g.selectBox.hover(function(){
-            	if (p.hideOnLoseFocus && g.selectBox.is(":visible") && !g.boxToggling && !g.resizing)
-                {
-                    g._toggleSelectBox(false);
-                }
-            }, function (e){
+            g.selectBox.hover(null, function (e)
+            {
                 if (p.hideOnLoseFocus && g.selectBox.is(":visible") && !g.boxToggling && !g.resizing)
                 {
                     g._toggleSelectBox(true);
