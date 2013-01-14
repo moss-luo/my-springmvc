@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.isoftstone.wissdemo.biz.persons.PersonsService;
 import com.isoftstone.wissdemo.common.queryUtil.QueryExecutor;
 import com.isoftstone.wissdemo.common.queryUtil.QueryTemplate;
+import com.isoftstone.wissdemo.common.utils.StringUtil;
+import com.isoftstone.wissdemo.common.vo.Resultval;
 import com.isoftstone.wissdemo.vo.Person;
 
 @Controller
@@ -36,7 +38,35 @@ public class PersonController {
 				return personServiceImpl.list(queryParams);
 			}
 		});
-		
-		 
+	}
+	
+	@RequestMapping
+	public @ResponseBody Resultval add(Person p){
+		try {
+			personServiceImpl.add(p);
+		} catch (Exception e) {
+			return new Resultval(false,"新增失败，请稍候重试!");
+		}
+		return new Resultval(true,"新增成功!");
+	}
+	
+	@RequestMapping
+	public @ResponseBody Resultval delete(String ids){
+		try {
+			personServiceImpl.delete(StringUtil.stringformatArray(ids));
+		} catch (Exception e) {
+			return new Resultval(false,"删除失败，请稍候重试!");
+		}
+		return new Resultval(true,"删除成功!");
+	}
+	
+	@RequestMapping
+	public @ResponseBody Resultval modify(Person p){
+		try {
+			personServiceImpl.modify(p);
+		} catch (Exception e) {
+			return new Resultval(false,"修改失败，请稍候重试");
+		}
+		return new Resultval(true,"修改成功");
 	}
 }

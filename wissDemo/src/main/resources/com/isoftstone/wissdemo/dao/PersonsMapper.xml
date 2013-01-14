@@ -9,4 +9,27 @@
 	<select id="total" parameterType="map" resultType="int">
 		 select count(*) from persons 
 	</select>
+	
+	<insert id="addPerson" parameterType="com.isoftstone.wissdemo.vo.Person">
+		insert into PERSONS (NAME, AGE, SEX, PHONE, IDENTITY_CARD_NUM, CURR_ADDRESS, COMPANY_NAME, REMARKS)
+			values(#{name},#{age},#{sex},#{phone},#{identity_card_num},#{curr_address},#{company_name},#{remarks})
+	</insert>
+	
+	<delete id="deletePerson" >
+		delete from persons where id in
+		<foreach collection="array"  item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="modifyPerson" parameterType="com.isoftstone.wissdemo.vo.Person">
+		update persons set name = #{name}, 
+		age=#{age},
+		sex=#{sex},
+		phone=#{phone},
+		curr_address=#{curr_address},
+		company_name=#{company_name},
+		remarks=#{remarks}
+		where id=#{id}
+	</update>
 </mapper>
