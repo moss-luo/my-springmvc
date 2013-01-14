@@ -29,7 +29,7 @@ public class DbDaoImpl extends SqlSessionDaoSupport implements CommoDao {
 
 	@Override
 	public int delete(String mapper, Object param) throws Exception {
-		return 0;
+		return this.getSqlSession().delete(mapper, param);
 	}
 
 }

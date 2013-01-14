@@ -25,6 +25,22 @@ public class PersonsServiceImpl  implements PersonsService{
 	public int total(Map<String, Object> parms) throws Exception {
 		return dbDao.selectOne("com.isoftstone.wissdemo.dao.PersonsMapper.total", parms);
 	}
+
+	@Override
+	public void add(Person p) throws Exception {
+		dbDao.insert("com.isoftstone.wissdemo.dao.PersonsMapper.addPerson", p);
+		
+	}
+
+	@Override
+	public void delete(int[] ids) throws Exception {
+		dbDao.delete("com.isoftstone.wissdemo.dao.PersonsMapper.deletePerson", ids);
+	}
+
+	@Override
+	public void modify(Person p) throws Exception {
+		dbDao.update("com.isoftstone.wissdemo.dao.PersonsMapper.modifyPerson", p);
+	}
 	
 	
 }

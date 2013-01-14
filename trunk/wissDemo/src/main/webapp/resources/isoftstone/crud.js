@@ -122,28 +122,6 @@
 			buttons = $([]);
 		}
 		
-		//构建editFrame的target
-		if(options.grid.addable || options.grid.updateable){
-			$("body").append("<div id='liger_editTarget' style='width:550px; margin:3px; display:none;'></div>");
-			$("#liger_editTarget").append(" <form id='liger_editform' name='liger_editform'></form>");
-			
-			var formData = $([]);
-			formData = $.map(options.fields,function(dom,i){
-				dom = $.extend({addShow:true,updateable:true,display:dom.title,
-								name:dom.field,width:dom.fieldWidth},dom);
-				if(dom.addShow)return dom;
-			});
-			
-			$("#liger_editform").ligerForm({
-				inputWidth: options.dialog.inputWidth, 
-				labelWidth: options.dialog.labelWidth, 
-				space: options.dialog.space,
-				fields:formData
-			});
-			
-			options.globalFormData = formData
-		}
-		
 		//判断是否可以进行新增操作
 		if(options.grid.addable){
 			buttons = buttons.add({
@@ -240,7 +218,7 @@
 		});
 		
 		$this.plugin.getHandle().initGrid();
-		
+		$this.plugin.getHandle().createForm();
 	}
 	
 	/**
@@ -351,27 +329,19 @@
 	  	    	},1500);
 		}
 	}
-	//生成随机数
-	Render.prototype.getRandom = function(){
-		var guid = new Date().getTime(), i;
-
-		for (i = 0; i < 5; i++) {
-			guid += Math.floor(Math.random() * 65535);
-		}
-		
-		return  guid ;
-
-	}
 
 	/**
 	 * 新增处理函数
 	 */
 	Handle.prototype.edit=function(item){
-		
 		if(item.id == "btnAdd"){
 			$.each(options.globalFormData,function(i,n){
-				$("[name='"+n.name+"']").val("");
-				});
+				if(n.initData===""&&n.initData=="undefined"&&n.initData==null){
+					$("[name='"+n.name+"']").val("");
+				}else{
+					$("[name='"+n.name+"']").val(n.initData);
+				} 
+			});
 			options.globalSaveType="add";
             $this.plugin.getHandle().createDialog(options.dialog.addTitle);
         } else{
@@ -384,6 +354,32 @@
         	$this.plugin.getHandle().createDialog(options.dialog.updateTitle);
         }
 		
+	}
+	/**
+	 * 构造form表单
+	 */
+	Handle.prototype.createForm = function(){
+		//构建editFrame的target
+		if(options.grid.addable || options.grid.updateable){
+			$("body").append("<div id='liger_editTarget' style='width:550px; margin:3px; display:none;'></div>");
+			$("#liger_editTarget").append(" <form id='liger_editform' name='liger_editform'></form>");
+			
+			var formData = $([]);
+			formData = $.map(options.fields,function(dom,i){
+				dom = $.extend({addShow:true,updateable:true,display:dom.title,
+								name:dom.field,width:dom.fieldWidth},dom);
+				if(dom.addShow)return dom;
+			});
+			
+			$("#liger_editform").ligerForm({
+				inputWidth: options.dialog.inputWidth, 
+				labelWidth: options.dialog.labelWidth, 
+				space: options.dialog.space,
+				fields:formData
+			});
+			
+			options.globalFormData = formData
+		}
 	}
 	/**
 	 * 处理选中checkbox

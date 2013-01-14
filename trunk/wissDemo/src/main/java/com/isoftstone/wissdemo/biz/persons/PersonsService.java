@@ -9,4 +9,10 @@ public interface PersonsService {
 	public List<Person> list(Map<String,Object> parms) throws Exception;
 	
 	public int total(Map<String,Object> parms) throws Exception;
+	
+	public void add(Person p) throws Exception;
+	
+	public void delete(int[] ids)throws Exception;
+	
+	public void modify(Person p)throws Exception;
 }

@@ -11,12 +11,19 @@ $(function(){
 			checkbox : true,
 		},
 		fields:[{
+			field:"id",
+			type:"hidden",
+			gridShow:false,
+			initData:0
+		},
+		{
 			title:"姓名",
 			field:"name",
 			gridWidth:"15%"
 		},{
 			title:"年龄",
 			field:"age",
+			newline: false,
 			gridWidth:"10%"
 		},{
 			title:"性别",
@@ -29,19 +36,28 @@ $(function(){
 		},{
 			title:"联系电话",
 			field:"phone",
+			newline: false,
+			gridWidth:"15%"
+		},{
+			title:"身份证号码",
+			field:"identity_card_num",
+			gridShow:false
+		},{
+			title:"公司名称",
+			newline: false,
+			field:"company_name",
 			gridWidth:"15%"
 		},{
 			title:"住址",
 			field:"curr_address",
-			gridWidth:"15%"
-		},{
-			title:"公司名称",
-			field:"company_name",
+			fieldWidth:440,
 			gridWidth:"15%"
 		},{
 			title:"备注",
 			field:"remarks",
-			gridWidth:"20%"
+			gridWidth:"20%",
+			fieldWidth:440,
+			type:"textarea"
 		}],
 		search:{
 			labelWidth:70,
@@ -52,8 +68,8 @@ $(function(){
 	 	},
 	 	dialog : {
 			labelWidth : 80,
-			height : 350,
-			width : 350,
+			height : 300,
+			width : 580,
 		}
 	};
 	
