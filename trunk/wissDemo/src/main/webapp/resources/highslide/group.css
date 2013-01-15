@@ -1,0 +1,15 @@
+.l-group-hasicon {
+    padding-left: 30px;
+}
+.l-group {
+    border-bottom: 1px solid #EBEBEB;
+    clear: both;
+    color: #333333;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+    margin: 14px 0 14px;
+    position: relative;
+}
