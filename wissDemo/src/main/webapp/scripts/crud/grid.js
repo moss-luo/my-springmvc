@@ -1,4 +1,5 @@
 $(function(){
+	var sexData=[{id:0,text:"女"},{id:1,text:"男"}];
 	var options = {
 		removeUrl : '../person/delete.do',
 		saveUrl : '../person/add.do',
@@ -63,7 +64,8 @@ $(function(){
 			labelWidth:70,
 			field:[
 			       {display:'用户名',name:'name', newline: false},
-			       {display: "公司名称",name: "company", newline: false},
+			       {display:'公司名称',name:'company_name', newline: false},
+			       {display: "性别",name: "sex", newline: false,type:"select",options: { initValue:0,data:sexData}},
 			]
 	 	},
 	 	dialog : {
