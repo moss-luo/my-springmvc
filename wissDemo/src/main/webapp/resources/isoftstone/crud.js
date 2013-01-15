@@ -263,7 +263,7 @@
 			searchPanel.append("<li style='width:100px;text-align:left;'>" +
 				"<input type='button' value='查  询' id='lbtn-query' style=' margin-top: 0px;' class='l-button'/></li> ");
 			searchPanel.append("<li style='width:100px;text-align:left;'>" +
-				"<input type='reset' value='重  置' id='lbtn-reset' style=' margin-top: 0px;' class='l-button'/></li> ");
+				"<input type='button' value='重  置' id='lbtn-reset' style=' margin-top: 0px;' class='l-button'/></li> ");
 			
 			
 			$("#lbtn-query").click(function(){
@@ -287,6 +287,18 @@
 						gridManager.loadData(true);
 					}
 				}
+			});
+			
+			$("#lbtn-reset").click(function(){
+				$.map(options.search.field,function(dom,i){
+					$("[name=searchForm_"+dom.name+"]").val("");
+					if(dom.type=="select" || dom.type=="combobox"){
+						$("[name=searchForm_"+dom.name+"_val]").val("");
+						if(dom.options.initValue){
+							$("[name=searchForm_"+dom.name+"]").ligerComboBox().selectValue(dom.options.initValue);
+						}
+					}
+				});
 			});
 		}
 		
