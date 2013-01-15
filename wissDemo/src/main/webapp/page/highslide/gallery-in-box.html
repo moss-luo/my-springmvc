@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "xhtml11.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>Highslide DEMO</title>
+		<link href="../../resources/highslide/group.css" rel="stylesheet" type="text/css" /> 
+		<link rel="stylesheet" type="text/css" href="../../resources/highslide/highslide.css" />
+		<script type="text/javascript" src="../../resources/highslide/highslide-full.js"></script>
+		
+		<script type="text/javascript">
+			hs.graphicsDir = '../../resources/highslide/graphics/';
+			hs.align = 'center';
+			hs.transitions = ['expand', 'crossfade'];
+			hs.outlineType = 'rounded-white';
+			hs.fadeInOut = true;
+			hs.dimmingOpacity = 0.75;
+		
+			// define the restraining box
+			hs.useBox = true;
+			hs.width = 640;
+			hs.height = 480;
+			hs.showCredits = false;
+		
+			// Add the controlbar
+			hs.addSlideshow({
+				//slideshowGroup: 'group1',
+				interval: 5000,
+				repeat: false,
+				useControls: true,
+				fixedControls: 'fit',
+				overlayOptions: {
+					opacity: 1,
+					position: 'bottom center',
+					hideOnMouseOut: true
+				}
+			});
+		</script>
+	
+	</head>
+
+	<body>
+		<div class="l-group l-group-hasicon">
+			<img src="../../resources/ligerUI/skins/icons/communication.gif"/>
+			<span>样例1</span>
+		</div>
+		<div class="highslide-gallery">
+			<a href="../../resources/images/highslide/gallery1.jpg" class="highslide" onclick="return hs.expand(this)">
+				<img src="../../resources/images/highslide/gallery1.thumb.jpg" alt="Highslide JS" title="Click to enlarge" />
+			</a>
+		
+			<div class="highslide-caption">
+				Caption for the first image. This caption can be styled using CSS.
+			</div>
+			<a href="../../resources/images/highslide/gallery2.jpg" class="highslide" onclick="return hs.expand(this)">
+				<img src="../../resources/images/highslide/gallery2.thumb.jpg" alt="Highslide JS" title="Click to enlarge" />
+			</a>
+		
+			<div class="highslide-caption">
+				Caption for the second image.
+			</div>
+		
+			<a href="../../resources/images/highslide/gallery3.jpg" class="highslide" onclick="return hs.expand(this)">
+				<img src="../../resources/images/highslide/gallery3.thumb.jpg" alt="Highslide JS" title="Click to enlarge" />
+			</a>
+		
+			<div class="highslide-caption">
+				Caption for the third image.
+			</div>
+		</div>
+		<div class="l-group l-group-hasicon">
+			<img src="../../resources/ligerUI/skins/icons/communication.gif"/>
+			<span>样例2(类似一周新闻图片集锦)</span>
+		</div>
+		
+		<div>
+			<a href="gallery-thumbstrip-above.html">点击进入查看样例2</a>
+		</div>
+	</body>
+</html>
