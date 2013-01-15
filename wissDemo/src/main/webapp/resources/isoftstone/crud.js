@@ -273,7 +273,7 @@
 						data = $.map(options.search.field,function(n,i){
 							var temp = {name:null,value:null};
 							temp.name = n.name;
-							if(n.type=="select"){
+							if(n.type=="select"||n.type=="combobox"){
 								if(n.options.valueFieldID)temp.value = $("[name='"+n.options.valueFieldID+"']").val();
 								else temp.value = $("[name='"+searchField[i].name+"_val']").val();
 							}else{
