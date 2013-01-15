@@ -294,7 +294,7 @@
 					$("[name=searchForm_"+dom.name+"]").val("");
 					if(dom.type=="select" || dom.type=="combobox"){
 						$("[name=searchForm_"+dom.name+"_val]").val("");
-						if(dom.options.initValue){
+						if(dom.options.initValue!==""||dom.options.initValue!="undefined"||dom.options.initValue!=null){
 							$("[name=searchForm_"+dom.name+"]").ligerComboBox().selectValue(dom.options.initValue);
 						}
 					}
