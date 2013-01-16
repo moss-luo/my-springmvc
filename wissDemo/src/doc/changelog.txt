@@ -5,3 +5,4 @@ fields加入参数initData，在springmvc中，接收参数的bean对象属性�
 修改了搜索框重置的实现方法，原来方法无法将select选择框正确重置；
 2013-1-16
 修复CRUD新增和修改时，select表单域无法选中默认值（修改时为当前值）的问题；
+修复CRUD中fields的类型为digits数字时，无法初始化值为0的BUG

@@ -250,7 +250,7 @@
 			var setting = field.upload;
 			var liger_upload = new AjaxUpload("#"+uploadBrowseId,{
 				 action:setting.action,  
-				 autoSubmit:setting.autoSubmit,  
+				 autoSubmit:setting.autoSubmit!="undefined"?setting.autoSubmit:false,  
 				 name:setting.name,  
 				 onChange:function(file, extension){
 					 setting.onChange?setting.onChange.call(this,file,extension):element.val(file);
