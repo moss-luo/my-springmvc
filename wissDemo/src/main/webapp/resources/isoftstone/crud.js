@@ -359,6 +359,9 @@
 					}else{
 						$("[name='"+n.name+"']").val(n.initData);
 					} 
+				}else{
+					if(n.options.initValue!==""&&n.options.initValue!="undefined"&&n.options.initValue!=null)
+						$("[name='"+n.name+"']").ligerComboBox().selectValue(n.options.initValue);
 				} 
 			});
 			options.globalSaveType="add";
