@@ -6,7 +6,7 @@ $(function (){
     	inputWidth: 170, labelWidth: 90, space: 40,
     	fields: [{ name: "ProductID", type: "hidden" },
     	         { display: "产品名称", name: "ProductName", newline: true, type: "text" , group: "基础信息", groupicon: groupicon}, 
-    	         { display: "供应商", name: "SupplierID", newline: false, type: "select", comboboxName: "CompanyName", options: { data:data } },
+    	         { display: "供应商", name: "SupplierID", newline: false, type: "select", comboboxName: "CompanyName", options: { initValue:1,data:data } },
     	         { display: "类别 ", name: "CategoryID", newline: true, type: "select", comboboxName: "CategoryName", options: { valueFieldID: "CategoryID" }},
     	         { display: "单价", name: "UnitPrice", newline: false,  type: "number" },
     	         { display: "日期 ", name: "AddTime", newline: true, type: "date"  },

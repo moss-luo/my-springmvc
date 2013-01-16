@@ -1,5 +1,5 @@
 $(function(){
-	var sexData=[{id:0,text:"女"},{id:1,text:"男"}];
+	var sexData=[{id:"0",text:"女"},{id:"1",text:"男"}];
 	var options = {
 		removeUrl : '../person/delete.do',
 		saveUrl : '../person/add.do',
@@ -30,8 +30,10 @@ $(function(){
 			title:"性别",
 			field:"sex",
 			gridWidth:"7%",
+			type:"select",
+			options: {initValue:"0",data:sexData},
 			render: function (row){
-				if(row.sex==1)return "男";
+				if(row.sex==="1")return "男";
 				else return "女";
 			},
 		},{

@@ -353,17 +353,23 @@
 	Handle.prototype.edit=function(item){
 		if(item.id == "btnAdd"){
 			$.each(options.globalFormData,function(i,n){
-				if(n.initData===""&&n.initData=="undefined"&&n.initData==null){
-					$("[name='"+n.name+"']").val("");
-				}else{
-					$("[name='"+n.name+"']").val(n.initData);
+				if(n.type!="select"&&n.type!="combobox"){
+					if(n.initData===""&&n.initData=="undefined"&&n.initData==null){
+						$("[name='"+n.name+"']").val("");
+					}else{
+						$("[name='"+n.name+"']").val(n.initData);
+					} 
 				} 
 			});
 			options.globalSaveType="add";
             $this.plugin.getHandle().createDialog(options.dialog.addTitle);
         } else{
         	$.each(options.globalFormData,function(i,n){
-        		$("[name='"+n.name+"']").val(options.globalDatagrid.getSelectedRow()[n.name]);
+        		if(n.type!="select"&&n.type!="combobox"){
+        			$("[name='"+n.name+"']").val(options.globalDatagrid.getSelectedRow()[n.name]);
+        		}else{
+        			$("[name='"+n.name+"']").ligerComboBox().selectValue(options.globalDatagrid.getSelectedRow()[n.name]);
+        		}
         		//不能修改的字段
         		if(!n.updateable)$("[name='"+n.name+"']").attr("disabled","disabled");
 			});
