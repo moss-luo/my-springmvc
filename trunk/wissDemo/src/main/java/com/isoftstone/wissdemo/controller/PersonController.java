@@ -1,14 +1,17 @@
 package com.isoftstone.wissdemo.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.isoftstone.wissdemo.biz.persons.PersonsService;
 import com.isoftstone.wissdemo.common.queryUtil.QueryExecutor;
@@ -68,5 +71,17 @@ public class PersonController {
 			return new Resultval(false,"修改失败，请稍候重试");
 		}
 		return new Resultval(true,"修改成功");
+	}
+	
+	@RequestMapping
+	public void upload(@RequestParam("file") CommonsMultipartFile file,HttpServletResponse response)throws Exception{
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pw = null;
+		pw = response.getWriter();
+		if(file.getSize()>0){
+			pw.print("上传成功");
+		}else{
+			pw.print("上传失败");
+		}
 	}
 }

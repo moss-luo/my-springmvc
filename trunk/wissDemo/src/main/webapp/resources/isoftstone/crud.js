@@ -53,7 +53,7 @@
 		dialog:{
 			inputWidth: 170, 
 			labelWidth: 50, 
-			space: 20,
+			space: 40,
 			width: 600, 										//弹出框宽度
 			height: 400,										//弹出框高度
 			addTitle:'新增',										//弹出框新增标题
@@ -351,6 +351,7 @@
 	 * 新增处理函数
 	 */
 	Handle.prototype.edit=function(item){
+		$(".errorInput").removeClass('errorInput');
 		if(item.id == "btnAdd"){
 			$.each(options.globalFormData,function(i,n){
 				if(n.type=="select"||n.type=="combobox"){
@@ -460,11 +461,11 @@
 				width: options.dialog.width, 
 				height: options.dialog.height,
 				buttons:[{text:'确定' ,onclick: function (i, d) { $this.plugin.getHandle().save(); }},
-				         {text:'取消' , onclick: function (i, d) { $("input").ligerHideTip(); d.hide();$(".errorInput").removeClass('errorInput'); }}]
+				         {text:'取消' , onclick: function (i, d) {$("input").ligerHideTip(); d.hide();$(".errorInput").removeClass('errorInput'); }}]
 			});
 			
 		   $(".l-dialog-close").bind('mousedown',
-				   function(){                    
+				   function(){
 	                    $("input").ligerHideTip(); 
 	                    options._dialog.hide();
 	                    $(".errorInput").removeClass('errorInput');
@@ -597,9 +598,9 @@
 					$(".errorInput").removeClass('errorInput');
 					if(errorList.length>0){
 						$.each(errorList,function(i,dom){
-							$(dom.element).parent().toggleClass('errorInput');;
+							$(dom.element).parent().toggleClass('errorInput');
 						});
-						
+						console.log("showErrors");
 						var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: errorList[0].message });
 				  	    tip.show();
 				  	    setTimeout(function (){tip.hide();},1500);
