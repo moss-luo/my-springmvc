@@ -1,4 +1,4 @@
-package com.isoftstone.wissdemo.common;
+package com.isoftstone.wissdemo.common.hsqldb;
 
 import org.hsqldb.Server;
 import org.hsqldb.persist.HsqlProperties;

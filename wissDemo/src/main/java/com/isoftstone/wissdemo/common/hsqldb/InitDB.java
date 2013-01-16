@@ -1,4 +1,4 @@
-package com.isoftstone.wissdemo.common;
+package com.isoftstone.wissdemo.common.hsqldb;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
