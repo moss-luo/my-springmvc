@@ -353,15 +353,16 @@
 	Handle.prototype.edit=function(item){
 		if(item.id == "btnAdd"){
 			$.each(options.globalFormData,function(i,n){
-				if(n.type!="select"&&n.type!="combobox"){
-					if(n.initData===""&&n.initData=="undefined"&&n.initData==null){
-						$("[name='"+n.name+"']").val("");
-					}else{
-						$("[name='"+n.name+"']").val(n.initData);
-					} 
-				}else{
+				if(n.type=="select"||n.type=="combobox"){
 					if(n.options.initValue!==""&&n.options.initValue!="undefined"&&n.options.initValue!=null)
 						$("[name='"+n.name+"']").ligerComboBox().selectValue(n.options.initValue);
+				}else{
+					if(n.initData!==""&&n.initData!="undefined"&&n.initData!=null){
+						$("[name='"+n.name+"']").val(n.initData);
+					}else{
+						if(n.type=="digits") $("[name='"+n.name+"']").val("0");
+						else $("[name='"+n.name+"']").val("");
+					} 
 				} 
 			});
 			options.globalSaveType="add";
@@ -487,14 +488,14 @@
 				url = options.saveUrl;
 				$.map(options.globalFormData,function(n,i){
 						if(n.strutsFieldName){
-							if(n.type=="select"){
+							if(n.type=="select"||n.type!="combobox"){
 								if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
 								else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
 							}else{
 								return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
 							}
 						}else{
-							if(n.type=="select"){
+							if(n.type=="select"||n.type!="combobox"){
 								if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
 								else return params[n.name]=$("[name='"+n.name+"_val']").val();
 							}else{
@@ -512,14 +513,14 @@
 				$.map(options.globalFormData,function(n,i){
 						if(n.updateable){
 							if(n.strutsFieldName){
-								if(n.type=="select"){
+								if(n.type=="select"||n.type!="combobox"){
 									if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
 									else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
 								}else{
 									return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
 								}
 							}else{
-								if(n.type=="select"){
+								if(n.type=="select"||n.type!="combobox"){
 									if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
 									else return params[n.name]=$("[name='"+n.name+"_val']").val();
 								}else{

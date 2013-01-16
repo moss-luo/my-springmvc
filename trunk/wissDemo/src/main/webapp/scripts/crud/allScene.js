@@ -28,7 +28,8 @@ $(function(){
 			title:"年龄",
 			field:"age",
 			newline: false,
-			type:"di",
+			type:"digits",
+			initData:"1",
 			gridWidth:"10%"
 		},{
 			title:"性别",
