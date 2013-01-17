@@ -489,14 +489,14 @@
 				url = options.saveUrl;
 				$.map(options.globalFormData,function(n,i){
 						if(n.strutsFieldName){
-							if(n.type=="select"||n.type!="combobox"){
+							if(n.type=="select"||n.type=="combobox"){
 								if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
 								else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
 							}else{
 								return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
 							}
 						}else{
-							if(n.type=="select"||n.type!="combobox"){
+							if(n.type=="select"||n.type=="combobox"){
 								if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
 								else return params[n.name]=$("[name='"+n.name+"_val']").val();
 							}else{
@@ -514,14 +514,14 @@
 				$.map(options.globalFormData,function(n,i){
 						if(n.updateable){
 							if(n.strutsFieldName){
-								if(n.type=="select"||n.type!="combobox"){
+								if(n.type=="select"||n.type=="combobox"){
 									if(n.options.valueFieldID)return params[n.strutsFieldName]=$("[name='"+n.options.valueFieldID+"']").val();
 									else return params[n.strutsFieldName]=$("[name='"+n.name+"_val']").val();
 								}else{
 									return params[n.strutsFieldName]=$("[name='"+n.name+"']").val();
 								}
 							}else{
-								if(n.type=="select"||n.type!="combobox"){
+								if(n.type=="select"||n.type=="combobox"){
 									if(n.options.valueFieldID)return params[n.name]=$("[name='"+n.options.valueFieldID+"']").val();
 									else return params[n.name]=$("[name='"+n.name+"_val']").val();
 								}else{
