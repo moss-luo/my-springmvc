@@ -600,7 +600,6 @@
 						$.each(errorList,function(i,dom){
 							$(dom.element).parent().toggleClass('errorInput');
 						});
-						console.log("showErrors");
 						var tip = $.ligerDialog.tip({ title: '提示信息',timeout:1200, content: errorList[0].message });
 				  	    tip.show();
 				  	    setTimeout(function (){tip.hide();},1500);
