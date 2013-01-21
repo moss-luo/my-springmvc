@@ -7,19 +7,21 @@ $(function(){
 	luckyTd.removeEleAt(0);
 	init();
 	getNewPersons();
-});
-function start() {
-	timer = setInterval("getRandNum();", 20);
-	$("#start").attr("disabled","disabled");
-	$("#end").removeAttr("disabled");
 	
-}
-function stop() {
-	clearInterval(timer);
-	setValues();
-	if(cellnum<50)$("#start").removeAttr("disabled");
-	$("#end").attr("disabled","disabled");
-}
+	$("#start").click(function(){
+		timer = setInterval("getRandNum();", 20);
+		$("#start").attr("disabled","disabled");
+		$("#stop").removeAttr("disabled");
+	});
+	
+	$("#stop").click(function(){
+		clearInterval(timer);
+		setValues();
+		if(cellnum<50)$("#start").removeAttr("disabled");
+		$("#stop").attr("disabled","disabled");
+	});
+});
+
 //产生10个不同的随机数
 function getRandomArray(){
 	var n = 0;
@@ -50,7 +52,8 @@ function modifyLuckyPersonStatus(n) {
 	$.ajax({
 		url:"person/modify.do",
 		async: false,
-		data:{names:$.map(allName,function(n){return n.textContent;}).join(',')},
+		cache:false,
+		data:{names:$.map(allName,function(n){return n.innerHTML;}).join(',')},
 		success:function(msg){
 					if(!msg.success)alert("出错了……");
 				}
@@ -61,6 +64,7 @@ function getNewPersons(){
 	$.ajax({
 		url:"person/list.do",
 		async: false,
+		cache:false,
 		success:function(msg){
 			persons=msg;
 		}
@@ -71,6 +75,7 @@ function init(){
 	$.ajax({
 		url:"person/init.do",
 		async: false,
+		cache:false,
 		success:function(data){
 			for ( var i = 0; i < data.length; i++) {
 				luckyTd[cellnum].innerHTML=data[i].name;
@@ -93,7 +98,7 @@ function setValues() {
 	
 	modifyLuckyPersonStatus();
 	for ( var i = 0; i < 10; i++) {
-		luckyTd[cellnum].innerHTML=allName[i].textContent;
+		luckyTd[cellnum].innerHTML=allName[i].innerHTML;
 		cellnum++;
 	}
 	getNewPersons();
