@@ -7,7 +7,7 @@ $(function(){
 				if(target.textContent==="-"){
 					return false;
 				}
-				alert('重新抽取');
+				alert('重新抽取，暂未实现');
 			}
 		}]
 	});
