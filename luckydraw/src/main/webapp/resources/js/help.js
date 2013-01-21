@@ -7,6 +7,7 @@ $(function(){
 		if(confirm("该操作将重置所有数据，确定重置吗？")){
 			$.ajax({
 				url:"help/reset.do",
+				cache:false,
 				success:function(data){
 					if(data.success)alert("重置数据成功");
 					else alert("重置数据失败");
