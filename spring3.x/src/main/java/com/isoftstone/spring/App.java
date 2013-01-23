@@ -1,4 +1,4 @@
-package com.isoftstone;
+package com.isoftstone.spring;
 
 /**
  * Hello world!
