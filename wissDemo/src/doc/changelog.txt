@@ -6,3 +6,5 @@ fields加入参数initData，在springmvc中，接收参数的bean对象属性�
 2013-1-16
 修复CRUD新增和修改时，select表单域无法选中默认值（修改时为当前值）的问题；
 修复CRUD中fields的类型为digits数字时，无法初始化值为0的BUG
+2013-1-24
+目前发现如果同时引入ligerDialog.js和ligerGrid.js将会产生一个BUG（原生的BUG，IE下表格左右摇摆会产生闪烁）

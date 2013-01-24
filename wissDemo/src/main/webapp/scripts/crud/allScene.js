@@ -108,7 +108,7 @@ $(function(){
 			labelWidth : 90,
 			inputWidth: 177,
 			height : 300,
-			width : 650,
+			width : 700,
 			height:400,
 		},
 		validate:{
