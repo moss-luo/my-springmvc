@@ -3,11 +3,30 @@
 
 <mapper namespace="com.isoftstone.wissdemo.dao.PersonsMapper">
 	<select id="list" parameterType="map" resultType="com.isoftstone.wissdemo.vo.Person">
-		 select limit #{start} #{rows} * from persons 
+		 select limit #{start} #{rows} * from persons where 1=1
+		 <if test="company_name!=null and company_name!=''">
+		 	and COMPANY_NAME = #{company_name}
+		 </if>
+		 <if test="name!=null and name!=''">
+		 	and NAME like '%' || #{name} || '%'
+		 </if>
+		 <if test="sex!=null and sex!=''">
+		 	and SEX=#{sex}
+		 </if>
+		 
 	</select>
 	
 	<select id="total" parameterType="map" resultType="int">
-		 select count(*) from persons 
+		 select count(*) from persons where 1=1
+		 <if test="company_name!=null and company_name!=''">
+		 	and COMPANY_NAME = #{company_name}
+		 </if>
+		 <if test="name!=null and name!=''">
+		 	and NAME like '%' || #{name} || '%'
+		 </if>
+		 <if test="sex!=null and sex!=''">
+		 	and SEX=#{sex}
+		 </if>
 	</select>
 	
 	<insert id="addPerson" parameterType="com.isoftstone.wissdemo.vo.Person">
