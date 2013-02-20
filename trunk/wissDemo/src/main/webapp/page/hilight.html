@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>自动创建表单</title>
+	    <script src="../resources/jquery/jquery-1.7.2.min.js" type="text/javascript"></script>
+	    <script src="../resources/isoftstone/hilight.js" type="text/javascript"></script> 
+		<script type="text/javascript">
+			$(function(){
+				$.fn.hilight.defaults.foreground = 'blue';    
+				$('.lab1').hilight();  
+			
+			});
+		</script>
+	</head>
+	<body style="padding:10px"> 
+    	<div>
+    		<label>原来的字体</label>
+    		<br/>
+    		<label class="lab1">第一行字体</label>
+    		<br/>
+    		<label class="lab1">第二行字体</label>
+    	</div> 
+    </body>
+</html>
