@@ -13,8 +13,8 @@ public class DbDaoImpl extends SqlSessionDaoSupport implements CommoDao {
 	}
 
 	@Override
-	public int selectOne(String mapper, Object param) throws Exception {
-		return (Integer) this.getSqlSession().selectOne(mapper, param);
+	public Object selectOne(String mapper, Object param) throws Exception {
+		return this.getSqlSession().selectOne(mapper, param);
 	}
 
 	@Override

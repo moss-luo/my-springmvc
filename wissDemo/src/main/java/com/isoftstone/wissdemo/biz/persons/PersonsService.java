@@ -15,4 +15,6 @@ public interface PersonsService {
 	public void delete(int[] ids)throws Exception;
 	
 	public void modify(Person p)throws Exception;
+	
+	public Person view(int id)throws Exception;
 }

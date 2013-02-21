@@ -51,4 +51,8 @@
 		remarks=#{remarks}
 		where id=#{id}
 	</update>
+	
+	<select id="viewPerson" parameterType="int" resultType="com.isoftstone.wissdemo.vo.Person">
+		select * from persons where id=#{id}
+	</select>
 </mapper>
