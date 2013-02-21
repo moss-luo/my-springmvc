@@ -142,7 +142,18 @@ $(function(){
 });
 
 function viewItem(id){
-	alert(id);
+	var personData;
+	$.ajax({
+		type: "POST",
+		   url:'../person/viewPerson.do',
+		   dataType:'json',
+		   data:{id:id},
+		   success: function(data){
+			   personData = data;
+		   }
+	});
+	
+	
 }
 
 function tip(msg){

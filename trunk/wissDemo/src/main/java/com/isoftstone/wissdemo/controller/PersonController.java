@@ -74,6 +74,17 @@ public class PersonController {
 	}
 	
 	@RequestMapping
+	public @ResponseBody Person viewPerson(int id){
+		Person p = null;
+		try {
+			p = personServiceImpl.view(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+	
+	@RequestMapping
 	public void upload(@RequestParam("file") CommonsMultipartFile file,HttpServletResponse response)throws Exception{
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = null;

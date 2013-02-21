@@ -23,7 +23,7 @@ public class PersonsServiceImpl  implements PersonsService{
 	
 	@Override
 	public int total(Map<String, Object> parms) throws Exception {
-		return dbDao.selectOne("com.isoftstone.wissdemo.dao.PersonsMapper.total", parms);
+		return (Integer) dbDao.selectOne("com.isoftstone.wissdemo.dao.PersonsMapper.total", parms);
 	}
 
 	@Override
@@ -40,6 +40,11 @@ public class PersonsServiceImpl  implements PersonsService{
 	@Override
 	public void modify(Person p) throws Exception {
 		dbDao.update("com.isoftstone.wissdemo.dao.PersonsMapper.modifyPerson", p);
+	}
+
+	@Override
+	public Person view(int id) throws Exception {
+		return (Person)dbDao.selectOne("com.isoftstone.wissdemo.dao.PersonsMapper.viewPerson", id);
 	}
 	
 	
