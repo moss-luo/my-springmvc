@@ -282,7 +282,6 @@
 							return temp;
 						});
 						var gridManager = selector.ligerGetGridManager(); 
-						
 						gridManager.setOptions({parms:data});
 						gridManager.loadData(true);
 					}
