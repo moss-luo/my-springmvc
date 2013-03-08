@@ -24,7 +24,7 @@ import com.isoftstone.wissdemo.vo.Person;
 @RequestMapping
 public class PersonController {
 	@Resource
-	private PersonsService personServiceImpl;
+	private PersonsService<Person> personServiceImpl;
 
 	@RequestMapping
 	public @ResponseBody Map<String,Object> query(@RequestParam final Map<String,Object> queryParams) throws Exception{
@@ -38,7 +38,7 @@ public class PersonController {
 
 			@Override
 			public List<Person> list(Map<String, Object> params)throws Exception {
-				return personServiceImpl.list(queryParams);
+				return personServiceImpl.selectList(queryParams);
 			}
 		});
 	}
@@ -46,7 +46,7 @@ public class PersonController {
 	@RequestMapping
 	public @ResponseBody Resultval add(Person p){
 		try {
-			personServiceImpl.add(p);
+			personServiceImpl.insert(p);
 		} catch (Exception e) {
 			return new Resultval(false,"新增失败，请稍候重试!");
 		}
@@ -66,7 +66,7 @@ public class PersonController {
 	@RequestMapping
 	public @ResponseBody Resultval modify(Person p){
 		try {
-			personServiceImpl.modify(p);
+			personServiceImpl.update(p);
 		} catch (Exception e) {
 			return new Resultval(false,"修改失败，请稍候重试");
 		}
@@ -77,7 +77,7 @@ public class PersonController {
 	public @ResponseBody Person viewPerson(int id){
 		Person p = null;
 		try {
-			p = personServiceImpl.view(id);
+			p = personServiceImpl.selectOne(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
