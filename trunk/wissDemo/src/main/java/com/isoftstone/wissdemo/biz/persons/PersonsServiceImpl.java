@@ -10,14 +10,14 @@ import com.isoftstone.wissdemo.dao.CommoDao;
 import com.isoftstone.wissdemo.vo.Person;
 
 @Service
-public class PersonsServiceImpl  implements PersonsService{
+public class PersonsServiceImpl extends AbstractPersonService<Person>{
 	
 	@Autowired
 	private CommoDao dbDao;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Person> list(Map<String, Object> params) throws Exception {
+	public List<Person> selectList(Map<String, Object> params)throws Exception{
 		return (List<Person>) dbDao.selectList("com.isoftstone.wissdemo.dao.PersonsMapper.list", params);
 	}
 	
@@ -27,9 +27,9 @@ public class PersonsServiceImpl  implements PersonsService{
 	}
 
 	@Override
-	public void add(Person p) throws Exception {
+	public Person insert(Person p) throws Exception {
 		dbDao.insert("com.isoftstone.wissdemo.dao.PersonsMapper.addPerson", p);
-		
+		return p;
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class PersonsServiceImpl  implements PersonsService{
 	}
 
 	@Override
-	public void modify(Person p) throws Exception {
+	public void update(Person p) throws Exception {
 		dbDao.update("com.isoftstone.wissdemo.dao.PersonsMapper.modifyPerson", p);
 	}
 
 	@Override
-	public Person view(int id) throws Exception {
+	public Person selectOne(int id) throws Exception {
 		return (Person)dbDao.selectOne("com.isoftstone.wissdemo.dao.PersonsMapper.viewPerson", id);
 	}
 	
