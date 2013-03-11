@@ -1,5 +1,7 @@
 package com.isoftstone.wissdemo.vo;
 
+import java.util.List;
+
 public class Person {
 	private int id;
 	private String name;
@@ -10,6 +12,9 @@ public class Person {
 	private String company_name;
 	private String identity_card_num;
 	private String remarks;
+	private List<Card> card;
+	private School school;
+	private int school_id;
 	public int getId() {
 		return id;
 	}
@@ -63,5 +68,23 @@ public class Person {
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	public List<Card> getCard() {
+		return card;
+	}
+	public void setCard(List<Card> card) {
+		this.card = card;
+	}
+	public School getSchool() {
+		return school;
+	}
+	public void setSchool(School school) {
+		this.school = school;
+	}
+	public int getSchool_id() {
+		return school_id;
+	}
+	public void setSchool_id(int school_id) {
+		this.school_id = school_id;
 	}
 }
