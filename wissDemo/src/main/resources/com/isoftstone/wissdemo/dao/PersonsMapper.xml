@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.isoftstone.wissdemo.dao.PersonsMapper">
+	<resultMap id="personResult" type="com.isoftstone.wissdemo.vo.Person">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<association property="school" column="school_id" select="selectSchool" javaType="com.isoftstone.wissdemo.vo.School" />
+		<collection property="card" column="id" select="selectCard" resultMap="cardResult"/>
+	</resultMap>
+	
+	<resultMap type="com.isoftstone.wissdemo.vo.Card" id="cardResult">
+		<result property="id" column="id"/>
+		<result property="personId" column="person_id"/>
+		<result property="card_issuing_institution" column="c_i_i"/>
+		<result property="cardName" column="card_name"/>
+	</resultMap>
+
+
 	<select id="list" parameterType="map" resultType="com.isoftstone.wissdemo.vo.Person">
 		 select limit #{start} #{rows} * from persons where 1=1
 		 <if test="company_name!=null and company_name!=''">
@@ -52,7 +67,15 @@
 		where id=#{id}
 	</update>
 	
-	<select id="viewPerson" parameterType="int" resultType="com.isoftstone.wissdemo.vo.Person">
+	<select id="viewPerson" parameterType="int" resultMap="personResult">
 		select * from persons where id=#{id}
+	</select>
+	
+	<select id="selectSchool" parameterType="int" resultType="com.isoftstone.wissdemo.vo.School">
+		select school_name name ,school_address address from school where t_id=#{school_id}
+	</select>
+	
+	<select id="selectCard" parameterType="int" resultMap="cardResult">
+		select * from card where person_id=#{person_id}
 	</select>
 </mapper>
