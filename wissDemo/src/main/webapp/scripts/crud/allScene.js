@@ -8,7 +8,7 @@ $(function(){
 		grid:{
 			dataUrl : '../person/query.do',
 			idField : 'id',
-			pageSize : 15,
+			pageSize : 10,
 			pageList: [10, 15, 20, 25, 30],
 			checkbox : true,
 			toolbars:{items:[{id:'diyAdd',text:'自定义新增',icon:'add',click:diyAddHandle}]}
@@ -97,6 +97,7 @@ $(function(){
 		}],
 		search:{
 			labelWidth:70,
+			inputWidth:135,
 			field:[
 			       {display:'姓名',name:'name', newline: false},
 			       {display:'公司名称',name:'company_name', newline: false},
