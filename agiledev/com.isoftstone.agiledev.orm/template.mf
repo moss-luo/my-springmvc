@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: AgileDev ORM
+Bundle-SymbolicName: com.isoftstone.agiledev.orm
+Bundle-Version: 1.0.3.RELEASE
+Bundle-ClassPath: .
+Import-Template: org.osgi.framework.*,
+ com.isoftstone.agiledev.config.*;version="1.0.3.RELEASE"
