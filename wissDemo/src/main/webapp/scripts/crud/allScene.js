@@ -150,6 +150,7 @@ function viewItem(id){
 		   dataType:'json',
 		   data:{id:id},
 		   success: function(data){
+			   console.dir(data);
 			   personData = data;
 		   }
 	});
