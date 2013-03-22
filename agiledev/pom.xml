@@ -26,5 +26,8 @@
 	<module>com.isoftstone.agiledev.hrdemo.report.app</module>
     <module>com.isoftstone.agiledev.hrdemo.report.web</module>
     <module>com.isoftstone.agiledev.hrdemo.ligerui.web</module>
+	<module>com.isoftstone.agiledev.hrdemo.person.app</module>
+	<module>com.isoftstone.agiledev.hrdemo.person.web</module>
+
   </modules>
 </project>
