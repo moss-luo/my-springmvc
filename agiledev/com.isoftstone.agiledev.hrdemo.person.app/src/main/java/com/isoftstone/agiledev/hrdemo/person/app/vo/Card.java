@@ -7,6 +7,18 @@ public class Card {
 	private String card_issuing_institution;
 	private String cardName;
 	
+	public Card() {
+		super();
+	}
+	public Card(int id, int personId, String cardNum,
+			String card_issuing_institution, String cardName) {
+		super();
+		this.id = id;
+		this.personId = personId;
+		this.cardNum = cardNum;
+		this.card_issuing_institution = card_issuing_institution;
+		this.cardName = cardName;
+	}
 	public int getId() {
 		return id;
 	}

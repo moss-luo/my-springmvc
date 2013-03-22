@@ -15,6 +15,28 @@ public class Person {
 	private List<Card> card;
 	private School school;
 	private int school_id;
+	
+	public Person(){
+		super();
+	}
+	
+	public Person(int id, String name, int age, String sex, String phone,
+			String curr_address, String company_name, String identity_card_num,
+			String remarks, List<Card> card, School school, int school_id) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.sex = sex;
+		this.phone = phone;
+		this.curr_address = curr_address;
+		this.company_name = company_name;
+		this.identity_card_num = identity_card_num;
+		this.remarks = remarks;
+		this.card = card;
+		this.school = school;
+		this.school_id = school_id;
+	}
 	public int getId() {
 		return id;
 	}
