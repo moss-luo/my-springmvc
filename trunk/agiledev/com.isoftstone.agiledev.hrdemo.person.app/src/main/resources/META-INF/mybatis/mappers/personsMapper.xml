@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.isoftstone.agiledev.hrdemo.person.app.PersonsMapper">
+	<resultMap id="personResult" type="com.isoftstone.agiledev.hrdemo.person.app.vo.Person">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<association property="school" column="school_id" select="selectSchool" javaType="com.isoftstone.agiledev.hrdemo.person.app.vo.School" />
+		<collection property="card" column="id" select="selectCard" resultMap="cardResult"/>
+	</resultMap>
+	
+	<resultMap type="com.isoftstone.agiledev.hrdemo.person.app.vo.Card" id="cardResult">
+		<result property="id" column="id"/>
+		<result property="personId" column="person_id"/>
+		<result property="card_issuing_institution" column="c_i_i"/>
+		<result property="cardName" column="card_name"/>
+	</resultMap>
+
+
+	<select id="list" parameterType="map" resultType="com.isoftstone.agiledev.hrdemo.person.app.vo.Person">
+		 select limit #{start} #{rows} * from persons where 1=1
+		 <if test="company_name!=null and company_name!=''">
+		 	and COMPANY_NAME = #{company_name}
+		 </if>
+		 <if test="name!=null and name!=''">
+		 	and NAME like '%' || #{name} || '%'
+		 </if>
+		 <if test="sex!=null and sex!=''">
+		 	and SEX=#{sex}
+		 </if>
+	</select>
+	
+	<select id="total" parameterType="map" resultType="int">
+		 select count(*) from persons where 1=1
+		 <if test="company_name!=null and company_name!=''">
+		 	and COMPANY_NAME = #{company_name}
+		 </if>
+		 <if test="name!=null and name!=''">
+		 	and NAME like '%' || #{name} || '%'
+		 </if>
+		 <if test="sex!=null and sex!=''">
+		 	and SEX=#{sex}
+		 </if>
+	</select>
+	
+	<insert id="addPerson" parameterType="com.isoftstone.agiledev.hrdemo.person.app.vo.Person">
+		insert into PERSONS (NAME, AGE, SEX, PHONE, IDENTITY_CARD_NUM, CURR_ADDRESS, COMPANY_NAME, REMARKS)
+			values(#{name},#{age},#{sex},#{phone},#{identity_card_num},#{curr_address},#{company_name},#{remarks})
+	</insert>
+	
+	<delete id="deletePerson" >
+		delete from persons where id in
+		<foreach collection="array"  item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="modifyPerson" parameterType="com.isoftstone.agiledev.hrdemo.person.app.vo.Person">
+		update persons set name = #{name}, 
+		age=#{age},
+		sex=#{sex},
+		phone=#{phone},
+		curr_address=#{curr_address},
+		company_name=#{company_name},
+		remarks=#{remarks}
+		where id=#{id}
+	</update>
+	
+	<select id="viewPerson" parameterType="int" resultMap="personResult">
+		select * from persons where id=#{id}
+	</select>
+	
+	<select id="selectSchool" parameterType="int" resultType="com.isoftstone.agiledev.hrdemo.person.app.vo.School">
+		select school_name name ,school_address address from school where t_id=#{school_id}
+	</select>
+	
+	<select id="selectCard" parameterType="int" resultMap="cardResult">
+		select * from card where person_id=#{person_id}
+	</select>
+</mapper>
