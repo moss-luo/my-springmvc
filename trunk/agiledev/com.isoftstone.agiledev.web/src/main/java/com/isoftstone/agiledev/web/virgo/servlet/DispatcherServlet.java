@@ -17,6 +17,12 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.xml.SourceHttpMessageConverter;
+import org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.HandlerAdapter;
 
@@ -119,13 +125,20 @@ public class DispatcherServlet extends org.springframework.web.servlet.Dispatche
 	protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {
 		HandlerAdapter ha = super.getHandlerAdapter(handler);
 		if (ha instanceof org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter) {
-			return new AnnotationMethodHandlerAdapter();
+			return new AnnotationMethodHandlerAdapter(((org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter) ha)
+		.getMessageConverters());
 		}
 		
 		return ha;
 	}
 	
 	private class AnnotationMethodHandlerAdapter extends org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter {
+		public AnnotationMethodHandlerAdapter(HttpMessageConverter[] messageConverters) {
+			super();
+			// See SPR-7316
+			this.setMessageConverters(messageConverters);
+		}
+
 		@Override
 		protected ServletRequestDataBinder createBinder(HttpServletRequest request, Object target,
 				String objectName) throws Exception {
