@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ittbank.restful.util.TemplateResult;
 import com.ittbank.restful.util.json.HttpStatusWithJsonView;
 import com.ittbank.restful.vo.Phone;
+import com.ittbank.restful.vo.UserArray;
 
 
 /**
@@ -44,13 +45,13 @@ public class OrderController {
 	public TemplateResult index(HttpServletResponse resp) {
 		TemplateResult tr = new TemplateResult(HttpStatus.SC_OK, phone2);
 		return tr;
-	};
+	}
 
 	/** 进入新增 */
 	@RequestMapping(value = "/new")
 	public ModelAndView _new() {
 		return null;
-	};
+	}
 
 	/** 显示一条数据 */
 	@RequestMapping(value = "/{id}")
@@ -58,7 +59,7 @@ public class OrderController {
 	String show(@PathVariable long id) {
 		System.out.println("show");
 		return "OK";
-	};
+	}
 
 	/** 编辑 */
 	@RequestMapping(value = "/edit/{id}")
@@ -68,7 +69,7 @@ public class OrderController {
 		model.put("name2", "james");
 		model.put("httpstatus", 201);
 		return new ModelAndView(new HttpStatusWithJsonView(), model);
-	};
+	}
 
 	/**
 	 * 保存新增 注明：不使用add() 方法是由于add这个方法会被maxthon浏览器当做广告链接过滤掉,因为包含ad字符
@@ -77,24 +78,34 @@ public class OrderController {
 	public String create(HttpServletResponse resp) {
 		resp.setStatus(HttpStatus.SC_NOT_MODIFIED);
 		return "create method";
-	};
+	}
 
 	/** 保存更改 */
 	@RequestMapping(method = RequestMethod.PUT)
 	public ModelAndView update() {
 		return null;
-	};
+	}
 
 	/** 删除单个 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ModelAndView delete(@PathVariable long id) {
 		return null;
-	};
+	}
 
 	/** 批量删除 */
 	@RequestMapping(method = RequestMethod.DELETE)
 	public ModelAndView batchDelete(@RequestParam("items") Long[] items) {
 		return null;
-	};
+	}
+	/**
+	 * 测试springmvc如何传数组参数
+	 * @param users
+	 * @return
+	 */
+	@RequestMapping("list")
+	public @ResponseBody String list(UserArray users){
+		System.out.println("list");
+		return "success";
+	}
 
 }
