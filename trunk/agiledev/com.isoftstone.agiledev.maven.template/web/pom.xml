@@ -46,7 +46,7 @@
 								<resource>
 									<directory>${project.build.outputDirectory}</directory>
 									<includes>
-										<include>com/isoftstone/**/*.class</include>
+										<include>**/*.class</include>
 									</includes>
 								</resource>
 							</resources>
