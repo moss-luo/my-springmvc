@@ -14,3 +14,4 @@ Import-Package: org.eclipse.virgo.web.dm;version="[3.5.0,4)"
 Excluded-Exports: com.isoftstone.agiledev.web,
  agiledev
 Excluded-Imports: com.isoftstone.agiledev.web
+Bundle-Activator: com.isoftstone.agiledev.web.virgo.filter.ResourcePositioning
