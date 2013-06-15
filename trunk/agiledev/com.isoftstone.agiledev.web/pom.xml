@@ -51,5 +51,77 @@
 		<artifactId>com.isoftstone.agiledev.config</artifactId>
 	</dependency>
         
+		<dependency>
+			<groupId>org.eclipse.virgo.snaps</groupId>
+			<artifactId>org.eclipse.virgo.snaps.core</artifactId>
+			<version>3.5.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.equinox.event</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.slf4j.jul</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.apache.catalina</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.equinox.cm</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.osgi.services</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>ch.qos.logback.slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.equinox.region</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.osgi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>ch.qos.logback.core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>ch.qos.logback.classic</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.equinox.log</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>com.springsource.org.aspectj.weaver</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>javax.servlet</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>javax.servlet.jsp</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.eclipse.osgi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.virgo.mirrored</groupId>
+					<artifactId>org.slf4j.api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        
   </dependencies>
 </project>
