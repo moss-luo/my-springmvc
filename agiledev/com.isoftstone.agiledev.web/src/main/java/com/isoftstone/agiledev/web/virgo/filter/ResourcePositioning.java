@@ -1,8 +1,11 @@
 package com.isoftstone.agiledev.web.virgo.filter;
 
 import java.io.BufferedInputStream;
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -33,10 +36,6 @@ public class ResourcePositioning implements org.osgi.framework.BundleActivator {
 	}
 
 	public static boolean tryLookup(String servletPath,String contextPath,OutputStream output) {
-//		servletPath = servletPath.substring(contextPath.length() + 1);
-//		servletPath = servletPath.indexOf("/") != -1 ? servletPath.substring(0,
-//				servletPath.indexOf("/")) : servletPath;// /home;/resources
-//		String lookupPath = getLookupPath("/" + servletPath);// home.html  resources/**/*.*
 		String lookupPath = getLookupPath(servletPath.substring(contextPath.length()));
 
 		if (lookupPath == null)
@@ -46,14 +45,13 @@ public class ResourcePositioning implements org.osgi.framework.BundleActivator {
 			URL resource = getResource(lookupPath);
 			if (resource == null)
 				return false;
-			InputStream input = new BufferedInputStream(resource.openStream());
-			byte[] buffer = new byte[4096];
-			int len;
-			while ((len = input.read(buffer)) > 0) {
-				output.write(buffer, 0, len);
+			BufferedInputStream input = new BufferedInputStream(resource.openStream());
+			BufferedReader r = new BufferedReader(new InputStreamReader(input));
+			BufferedWriter w = new BufferedWriter(new OutputStreamWriter(output));
+			String line = null;
+			while((line=r.readLine())!=null){
+				w.write(line);
 			}
-			output.flush();
-
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
