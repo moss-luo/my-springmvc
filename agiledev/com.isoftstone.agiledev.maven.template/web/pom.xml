@@ -101,8 +101,11 @@
 					<includes>
 						<include>WEB-INF/**/*</include>
 						<include>META-INF/**/*</include>
-						<include>resources/**/*</include>
+						<include>resource*/**/*</include>
 						<include>**/*.html</include>
+						<include>**/*.js</include>
+						<include>**/*.css</include>
+						<include>**/*image*/**/*</include>
 					</includes>
 					<archive>
             			<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
